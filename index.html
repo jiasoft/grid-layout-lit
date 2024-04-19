@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="shortcut icon" href="favicon.svg" type="image/x-icon" />
+        <script type="module" src="./dist/src/grid-layout-lit.js"></script>
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                font-family: 'Open Sans', sans-serif;
+                font-size: 1.5em;
+                padding: 0;
+                margin: 0;
+            }
+            grid-layout-lit {
+                height: 100%;
+                width: 100%;
+            }
+            #main {
+                height: 100%;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0px 0px 10px -5px #000;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main"></div>
+        <script type="module">
+            import { html, render } from '../src/assets/lit-core.min.js'
+            const layoutData = [
+                {
+                    id: 1,
+                    w: 30,
+                    h: 12,
+                    x: 1,
+                    y: 1,
+                    slot: 'slt1'
+                },
+                {
+                    id: 2,
+                    w: 30,
+                    h: 12,
+                    x: 32,
+                    y: 1,
+                    slot: 'slt2'
+                },
+                {
+                    id: 3,
+                    w: 30,
+                    h: 12,
+                    x: 63,
+                    y: 1,
+                    slot: 'slt3'
+                },
+                {
+                    id: 4,
+                    w: 30,
+                    h: 12,
+                    x: 94,
+                    y: 1,
+                    slot: 'slt4',
+                    float: true
+                }
+            ]
+            const onClose = e => {
+                console.log('close', e)
+            }
+            const onSave = e => {
+                console.log('save', e)
+            }
+            render(
+                html`
+                    <grid-layout-lit
+                        .layoutData=${layoutData}
+                        .edit="${true}"
+                        @close="${onClose}"
+                        @save="${onSave}"
+                    ></grid-layout-lit>
+                `,
+                document.querySelector('#main')
+            )
+        </script>
+    </body>
+</html>
