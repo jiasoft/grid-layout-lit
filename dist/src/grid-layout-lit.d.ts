@@ -115,6 +115,7 @@ export declare class GridLayoutLit extends LitElement {
      */
     defaultGridItemWidth: number;
     defaultGridItemHeight: number;
+    defaultRightMargin: number;
     /**
      * 是否禁止滚动条
      */
@@ -287,10 +288,6 @@ export declare class GridLayoutLit extends LitElement {
      */
     gridItemCopyBySubMenu: () => void;
     /**
-     * 导出
-     */
-    gridItemExportBySubMenu: () => void;
-    /**
      * GridLayout的点击事件
      * @param event
      * @returns
@@ -426,9 +423,9 @@ export declare class GridLayoutLit extends LitElement {
      * @returns
      */
     render(): import("lit-html").TemplateResult<1>;
-    renderToobar(): "" | import("lit-html").TemplateResult<1>;
+    renderToobar(): import("lit-html").TemplateResult<1> | "";
     showGridItemMenu(): import("lit-html").TemplateResult<1>;
-    showDialog(): "" | import("lit-html").TemplateResult<1>;
+    showDialog(): import("lit-html").TemplateResult<1> | "";
     static styles: import("lit").CSSResult;
 }
 export {};

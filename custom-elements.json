@@ -1,0 +1,1897 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/grid-layout-lit.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "GridLayoutLit",
+          "members": [
+            {
+              "kind": "field",
+              "name": "RenderIndex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "这个属性改动，页面才会render"
+            },
+            {
+              "kind": "field",
+              "name": "gridMargin",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "网格间距,每个间距是一个网格数"
+            },
+            {
+              "kind": "field",
+              "name": "edit",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "layoutData",
+              "type": {
+                "text": "GridItemData[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "hideToolbar",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "headerConfigList",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "$layoutDefaultGridStyle",
+              "type": {
+                "text": "GridItemStyleType"
+              },
+              "privacy": "private",
+              "default": "{\r\n        borderRadius: 3,\r\n        borderColor: '#c3c3c3',\r\n        borderWidth: 1,\r\n        borderStyle: 'solid',\r\n        titleColor: '',\r\n        contentColor: '',\r\n        disableScrollBars: false\r\n    }",
+              "description": "拖拽布局默认样式"
+            },
+            {
+              "kind": "field",
+              "name": "layoutDefaultGridStyle",
+              "type": {
+                "text": "GridItemStyleType"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "i18n",
+              "type": {
+                "text": "object"
+              },
+              "default": "{\r\n        t: (k:string, b: boolean) => k,\r\n        tt: (k:string, b: boolean) => k,\r\n        locale: 'zh-cn'\r\n    }"
+            },
+            {
+              "kind": "field",
+              "name": "stageWidth",
+              "type": {
+                "text": "number"
+              },
+              "default": "1000",
+              "description": "拖拽布局总体宽度 像素"
+            },
+            {
+              "kind": "field",
+              "name": "stageHeight",
+              "type": {
+                "text": "number"
+              },
+              "default": "800",
+              "description": "拖拽布局总体高度 像素"
+            },
+            {
+              "kind": "field",
+              "name": "hasDisplayScrollBar",
+              "description": "是否显示滚动条"
+            },
+            {
+              "kind": "field",
+              "name": "maxGridItemWidthCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "173",
+              "description": "宽度最大的网格数"
+            },
+            {
+              "kind": "field",
+              "name": "maxGridItemHeightCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "86",
+              "description": "高度最大的网格数"
+            },
+            {
+              "kind": "field",
+              "name": "curGridItemSubMenuPos",
+              "type": {
+                "text": "GridPosition"
+              },
+              "default": "{ x: 0, y: 0 }",
+              "description": "当前点击弹出菜单的Postion"
+            },
+            {
+              "kind": "field",
+              "name": "curGridItemSubMenuShow",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "显示相关的GridItem 的菜单"
+            },
+            {
+              "kind": "field",
+              "name": "curGridItemSubMenuGridData",
+              "type": {
+                "text": "GridItemData | null"
+              },
+              "default": "null",
+              "description": "当前点击弹出菜单GridItem"
+            },
+            {
+              "kind": "field",
+              "name": "showDialogGridStyle",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "dragData",
+              "type": {
+                "text": "object"
+              },
+              "default": "{ x: 0, y: 0, w: 60, h: 60, z: 0, id: DRAG_ID }",
+              "description": "底部占位阴影的数据\r\n(所有gridItem共用一个阴影)"
+            },
+            {
+              "kind": "field",
+              "name": "draggIng",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "floatStep",
+              "type": {
+                "text": "number"
+              },
+              "default": "1"
+            },
+            {
+              "kind": "field",
+              "name": "lightningId",
+              "type": {
+                "text": "string"
+              },
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "resizeFixPosition",
+              "type": {
+                "text": "any"
+              },
+              "default": "{ top: 0, left: 0 }",
+              "description": "移动初始位置"
+            },
+            {
+              "kind": "field",
+              "name": "resizeingPosition",
+              "type": {
+                "text": "any"
+              },
+              "default": "{ top: 0, left: 0 }",
+              "description": "移动中的位置"
+            },
+            {
+              "kind": "field",
+              "name": "resizeFixGridItemData",
+              "type": {
+                "text": "GridItemData | null"
+              },
+              "default": "null",
+              "description": "移动初始griditem 数据"
+            },
+            {
+              "kind": "field",
+              "name": "curResizingGridItemData",
+              "type": {
+                "text": "any | null"
+              },
+              "default": "null",
+              "description": "当前移动中的 gridItem 数据"
+            },
+            {
+              "kind": "field",
+              "name": "dataStore",
+              "type": {
+                "text": "any[]"
+              },
+              "default": "[]",
+              "description": "暂时无用\r\n存储数据"
+            },
+            {
+              "kind": "field",
+              "name": "dataStoreIndex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "curMovingGridItemData",
+              "type": {
+                "text": "any | null"
+              },
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "movePosition",
+              "type": {
+                "text": "HtmlPosition"
+              },
+              "default": "{ left: 0, top: 0 }"
+            },
+            {
+              "kind": "field",
+              "name": "transition",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "defaultGridItemWidth",
+              "type": {
+                "text": "number"
+              },
+              "default": "13",
+              "description": "默认 每个拖拽项目的宽高 所占的网格数"
+            },
+            {
+              "kind": "field",
+              "name": "defaultGridItemHeight",
+              "type": {
+                "text": "number"
+              },
+              "default": "7"
+            },
+            {
+              "kind": "field",
+              "name": "isDisableScrollBars",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "是否禁止滚动条"
+            },
+            {
+              "kind": "field",
+              "name": "griddingWidth",
+              "type": {
+                "text": "number"
+              },
+              "description": "正常情况下 有滚动条 的时候 每个网格的宽度所占的像素值"
+            },
+            {
+              "kind": "field",
+              "name": "griddingHeight",
+              "type": {
+                "text": "number"
+              },
+              "description": "计算每个网格的高度所占的像素值"
+            },
+            {
+              "kind": "field",
+              "name": "selectedGridItem",
+              "description": "选中的GridItem"
+            },
+            {
+              "kind": "method",
+              "name": "reRender",
+              "description": "重新渲染"
+            },
+            {
+              "kind": "method",
+              "name": "drawDragDataHtml",
+              "description": "拖拽阴影dom",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "findGridItemData",
+              "default": "(id: any): GridItemData | undefined => {\r\n        return this.layoutData.find((item: GridItemData) => item.id === id)\r\n    }",
+              "description": "查找GridItem",
+              "parameters": [
+                {
+                  "description": "gridItem id",
+                  "name": "id"
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "addGridItem",
+              "description": "添加 gridItem",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "lightningGrid",
+              "parameters": [
+                {
+                  "name": "grid",
+                  "type": {
+                    "text": "GridItemData"
+                  }
+                }
+              ],
+              "description": "闪一下Grid的样式"
+            },
+            {
+              "kind": "method",
+              "name": "focusGridItem",
+              "parameters": [
+                {
+                  "name": "grid",
+                  "type": {
+                    "text": "GridItemData"
+                  }
+                }
+              ],
+              "description": "移动到这个GridItem的显示屏上"
+            },
+            {
+              "kind": "method",
+              "name": "getGridItemElement",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  },
+                  "description": "gridItem的index"
+                }
+              ],
+              "description": "获取GridItem的元素"
+            },
+            {
+              "kind": "method",
+              "name": "getEmptyBound",
+              "parameters": [
+                {
+                  "name": "w",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "h",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "exceptFloatItem",
+                  "default": "true",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "description": "获取空间的位置",
+              "return": {
+                "type": {
+                  "text": "x"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "findBigestOverlapItem",
+              "default": "(\r\n        dataList: GridItemData[],\r\n        x: number,\r\n        y: number,\r\n        w: number, //每个网格宽度所占的像素值\r\n        h: number, //每个网格高度所占的像素值\r\n        exceptIds: any[],\r\n        exceptFloatItem: boolean = true\r\n    ): GridItemData | undefined => {\r\n        const list = this.findOverlapItem(dataList, x, y, w, h, exceptIds, 0, exceptFloatItem)\r\n        let BigestOverlapArea = -99999999999 //最大的重叠交叉面积\r\n        let BigestOverlapItem: any = undefined\r\n        list.forEach((item: any) => {\r\n            const curItemX = item.x\r\n            const curItemY = item.y\r\n            const curItemW = item.w\r\n            const curItemH = item.h\r\n            const overX1 = Math.max(x, curItemX)\r\n            const overX2 = Math.min(x + w, curItemX + curItemW)\r\n            const overW = overX2 - overX1\r\n            const overY1 = Math.max(y, curItemY)\r\n            const overY2 = Math.min(y + h, curItemY + curItemH)\r\n            const overH = overY2 - overY1\r\n            const overArea = overH * overW\r\n            if (overArea > BigestOverlapArea) {\r\n                BigestOverlapArea = overArea\r\n                BigestOverlapItem = item\r\n            }\r\n        })\r\n\r\n        return BigestOverlapItem\r\n    }",
+              "description": "查找存在的最大的重叠交叉项"
+            },
+            {
+              "kind": "field",
+              "name": "findOverlapItem",
+              "default": "(\r\n        dataList: GridItemData[],\r\n        x: number,\r\n        y: number,\r\n        w: number,\r\n        h: number,\r\n        exceptIds: any[],\r\n        overCount: number = 0,\r\n        exceptFloatItem: boolean = true\r\n    ): GridItemData[] => {\r\n        const list: GridItemData[] = []\r\n        let data = [...dataList]\r\n        if (exceptFloatItem) data = data.filter((item: any) => !item.float)\r\n        if (this.curActiveGridItem && this.dragData) {\r\n            // 如果有正在拖动的 那么 将正在拖动的项目添加到列表中\r\n            if (!data.find(item => item.id === this.dragData.id)) {\r\n                data = [...data, this.dragData]\r\n            }\r\n        }\r\n        for (let i = 0; i < data.length; i++) {\r\n            const item = data[i]\r\n            // 如果当前项目正在排出列表中 直接跳过循环\r\n            if (exceptIds && exceptIds.indexOf(item.id) >= 0) {\r\n                continue\r\n            }\r\n            // 当前项目的位置 大小 信息\r\n            const curItemX = item.x\r\n            const curItemY = item.y\r\n            const curItemW = item.w\r\n            const curItemH = item.h\r\n            // 对比项目(传入的) 与当前项目 对比 取出较小的\r\n            const x1 = Math.min(curItemX, x)\r\n            // 对比项目(传入的) 与当前项目 对比 取出较大的\r\n            const x2 = Math.max(curItemX + curItemW, x + w)\r\n\r\n            const y1 = Math.min(curItemY, y)\r\n            const y2 = Math.max(curItemY + curItemH, y + h)\r\n\r\n            //是否存在交叉的算法\r\n            // 假如两个项目重叠  那么 第一个项目的最左侧 + 第二个项目的最右侧 的 宽度 一定小于 两个 项目的宽度和\r\n            // 高度同上\r\n            if (\r\n                x2 - x1 - (curItemW + w) + overCount < this.gridMargin &&\r\n                y2 - y1 - (curItemH + h) + overCount < this.gridMargin\r\n            ) {\r\n                list.push(item)\r\n            }\r\n        }\r\n        return list\r\n    }",
+              "description": "获取交叉的GridItem 列表",
+              "parameters": [
+                {
+                  "description": "x",
+                  "name": "x"
+                },
+                {
+                  "description": "y",
+                  "name": "y"
+                },
+                {
+                  "description": "w",
+                  "name": "w"
+                },
+                {
+                  "description": "h",
+                  "name": "h"
+                },
+                {
+                  "description": "排除的id",
+                  "name": "exceptIds"
+                },
+                {
+                  "description": "排除 浮动的项目",
+                  "name": "exceptFloatItem"
+                },
+                {
+                  "description": "暂时定为 允许 重叠的网格个数",
+                  "name": "overCount"
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "gridItemResizeStart",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  },
+                  "description": "MouseEvent"
+                }
+              ],
+              "description": "Resize start 拖拉grid item 的大小"
+            },
+            {
+              "kind": "method",
+              "name": "gridItemResizeing",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ],
+              "description": "resizeing  中的方法"
+            },
+            {
+              "kind": "field",
+              "name": "handDispatchGridItemResizeEvent",
+              "type": {
+                "text": "any"
+              },
+              "default": "0",
+              "description": "触发gridItemResize事件"
+            },
+            {
+              "kind": "method",
+              "name": "dispatchGridItemResizeEvent",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "GridItemData | undefined | null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "gridItemResizeEnd",
+              "description": "结束改变大小\r\nResize end"
+            },
+            {
+              "kind": "method",
+              "name": "getGridItemStyle",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "GridItemData"
+                  },
+                  "description": "GridItemData"
+                }
+              ],
+              "description": "ItemStyle事件",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "saveCurLayout",
+              "description": "保存Layout"
+            },
+            {
+              "kind": "method",
+              "name": "animateGridItem",
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "GridItemData"
+                  }
+                },
+                {
+                  "name": "w",
+                  "default": "3",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "h",
+                  "default": "2",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "gridItemClose",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ],
+              "description": "移除GridItem"
+            },
+            {
+              "kind": "method",
+              "name": "closeGridItemSubMenu",
+              "description": "关闭菜单"
+            },
+            {
+              "kind": "method",
+              "name": "gridItemCloseBySubMenu",
+              "description": "移除GridItem"
+            },
+            {
+              "kind": "method",
+              "name": "getGridItemIndex",
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getGridItem",
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "gridItemDragstart",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  },
+                  "description": "PointerEvent"
+                }
+              ],
+              "description": "拖拽开始",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "calcNearPosition",
+              "default": "(left: number, top: number): GridPosition => {\r\n        const x = Math.round(left / this.griddingWidth)\r\n        const y = Math.round(top / this.griddingHeight)\r\n        return { x, y }\r\n    }",
+              "description": "转换成的GidPosition",
+              "parameters": [
+                {
+                  "description": "style.left",
+                  "name": "left"
+                },
+                {
+                  "description": "style.top",
+                  "name": "top"
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "x"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getNearEmptyPosition",
+              "parameters": [
+                {
+                  "name": "grid",
+                  "type": {
+                    "text": "GridItemData"
+                  },
+                  "description": ":GridItemData"
+                }
+              ],
+              "description": "获取最近的空间",
+              "return": {
+                "type": {
+                  "text": "x"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "getBackLayout",
+              "default": "() => {\r\n        this.dataStoreIndex--\r\n        return this.dataStore[this.dataStoreIndex]\r\n    }",
+              "description": "无用代码\r\n返回 上次的layout",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "backLayout",
+              "default": "() => {\r\n        const data = this.getBackLayout()\r\n        if (data) {\r\n            this.layoutData = JSON.parse(data)\r\n        }\r\n    }",
+              "description": "// 无用代码\r\n打开上次的保存layout"
+            },
+            {
+              "kind": "field",
+              "name": "getForwardLayout",
+              "default": "() => {\r\n        this.dataStoreIndex =\r\n            this.dataStore.length - 1 > this.dataStoreIndex\r\n                ? this.dataStoreIndex + 1\r\n                : this.dataStore.length - 1\r\n        return this.dataStore[this.dataStoreIndex]\r\n    }",
+              "description": "调试代码 无用 下一个layout"
+            },
+            {
+              "kind": "field",
+              "name": "forwardLayout",
+              "default": "() => {\r\n        const data = this.getForwardLayout()\r\n        if (data) {\r\n            this.layoutData = JSON.parse(data)\r\n        }\r\n    }",
+              "description": "调试代码 无用\r\n打开下一步的layout"
+            },
+            {
+              "kind": "field",
+              "name": "close",
+              "default": "() => {\r\n        const emit: any = new Event('close')\r\n        emit.detail = this.layoutData\r\n        this.dispatchEvent(emit)\r\n    }",
+              "description": "调试代码, 无用\r\n关闭事件"
+            },
+            {
+              "kind": "field",
+              "name": "save",
+              "default": "() => {\r\n        const emit: any = new Event('save')\r\n        emit.detail = this.layoutData\r\n        this.dispatchEvent(emit)\r\n    }",
+              "description": "测试代码 无用"
+            },
+            {
+              "kind": "field",
+              "name": "gridItemCopyBySubMenu",
+              "default": "() => {\r\n        if (!this.curGridItemSubMenuGridData) return\r\n        const emit: any = new Event('gridItemCopy')\r\n        emit.detail = this.curGridItemSubMenuGridData\r\n        this.closeGridItemSubMenu()\r\n        this.reRender()\r\n        this.dispatchEvent(emit)\r\n    }",
+              "description": "复杂",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "gridItemExportBySubMenu",
+              "default": "() => {\r\n        this.closeGridItemSubMenu()\r\n        this.reRender()\r\n    }",
+              "description": "导出"
+            },
+            {
+              "kind": "method",
+              "name": "onGridLayoutClick",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ],
+              "description": "GridLayout的点击事件",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getGridItemTopY",
+              "parameters": [
+                {
+                  "name": "dataList",
+                  "type": {
+                    "text": "GridItemData[]"
+                  }
+                },
+                {
+                  "name": "grid",
+                  "type": {
+                    "text": "ItemData"
+                  }
+                },
+                {
+                  "name": "exceptIds",
+                  "type": {
+                    "text": "any[]"
+                  }
+                }
+              ],
+              "description": "获取GridItem的TOP y坐标 检查上方有没有空间,如果有往上挪动一点",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "calcOverArea",
+              "parameters": [
+                {
+                  "name": "data1",
+                  "type": {
+                    "text": "ItemData"
+                  }
+                },
+                {
+                  "name": "data2",
+                  "type": {
+                    "text": "ItemData"
+                  }
+                }
+              ],
+              "description": "无用代码,暂时保留\r\n计算两项交叉面积",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "sortTopSpace",
+              "parameters": [
+                {
+                  "name": "list",
+                  "type": {
+                    "text": "GridItemData[]"
+                  }
+                }
+              ],
+              "description": "排序上面有空白的地方"
+            },
+            {
+              "kind": "method",
+              "name": "sortBottomOver",
+              "parameters": [
+                {
+                  "name": "list",
+                  "type": {
+                    "text": "GridItemData[]"
+                  }
+                }
+              ],
+              "description": "排序底部重叠的地方"
+            },
+            {
+              "kind": "method",
+              "name": "pressDownOver",
+              "parameters": [
+                {
+                  "name": "list",
+                  "type": {
+                    "text": "GridItemData[]"
+                  }
+                },
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "GridItemData"
+                  },
+                  "description": "将每个item 与 其他的item 一个个比较 有无重叠的部分"
+                }
+              ],
+              "description": "往下压"
+            },
+            {
+              "kind": "method",
+              "name": "rearrangement",
+              "description": "重新排序 将网格重新组合排列"
+            },
+            {
+              "kind": "method",
+              "name": "setZindexUp",
+              "description": "浮动 向上一级",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setZindexDown",
+              "description": "浮动 向下一级",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getLayoutDefaultGridItemStyle",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "无用代码,暂时保留"
+            },
+            {
+              "kind": "method",
+              "name": "openSetStyleBySubMenu",
+              "description": "打开样式配置",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openConfigSetBySubMenu",
+              "description": "弹出右上角的菜单",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "curActiveGridItem",
+              "description": "当前活动的GridItem"
+            },
+            {
+              "kind": "field",
+              "name": "curActiveGridItemStyle",
+              "description": "当前活动的GridItem style"
+            },
+            {
+              "kind": "field",
+              "name": "curSelectGridItem",
+              "type": {
+                "text": "GridItemData | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "curGridItemSubMenuGridDataActiveStyle",
+              "type": {
+                "text": "ActiveGridItemStyleType | undefined"
+              },
+              "description": "选中的UserStyle;"
+            },
+            {
+              "kind": "field",
+              "name": "calcStageVirtualHeight",
+              "type": {
+                "text": "number"
+              },
+              "description": "计算的舞台虚拟高度 网格数"
+            },
+            {
+              "kind": "field",
+              "name": "calcStageActualHeight",
+              "type": {
+                "text": "number"
+              },
+              "description": "计算的舞台实际高度"
+            },
+            {
+              "kind": "method",
+              "name": "dialogClose",
+              "description": "无用代码\r\n关闭"
+            },
+            {
+              "kind": "field",
+              "name": "boxResizeTime",
+              "type": {
+                "text": "any"
+              },
+              "default": "0",
+              "description": "resize事件"
+            },
+            {
+              "kind": "method",
+              "name": "boxResize"
+            },
+            {
+              "kind": "field",
+              "name": "bindHnd",
+              "type": {
+                "text": "{[s: string]: any}"
+              },
+              "default": "{}",
+              "description": "绑定事件"
+            },
+            {
+              "kind": "method",
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "obj",
+                  "type": {
+                    "text": "any"
+                  }
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "WcVueGridStyleChange",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ],
+              "description": "无用代码"
+            },
+            {
+              "kind": "method",
+              "name": "onCLickTool",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ],
+              "description": "工具栏"
+            },
+            {
+              "kind": "method",
+              "name": "getItemTitle",
+              "parameters": [
+                {
+                  "name": "itemId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "获取title"
+            },
+            {
+              "kind": "method",
+              "name": "renderToobar"
+            },
+            {
+              "kind": "method",
+              "name": "showGridItemMenu"
+            },
+            {
+              "kind": "method",
+              "name": "showDialog"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "GridLayoutLit",
+          "declaration": {
+            "name": "GridLayoutLit",
+            "module": "src/grid-layout-lit.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icon.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MORE_SVG",
+          "default": "html`<svg\r\n    xmlns=\"http://www.w3.org/2000/svg\"\r\n    width=\"16\"\r\n    height=\"16\"\r\n    fill=\"currentColor\"\r\n    class=\"bi bi-three-dots\"\r\n    viewBox=\"0 0 16 16\"\r\n>\r\n    <path\r\n        d=\"M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z\"\r\n    />\r\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "TITLE_SVG",
+          "default": "html` <svg\r\n    width=\"13px\"\r\n    height=\"13px\"\r\n    viewBox=\"0 0 13 13\"\r\n    version=\"1.1\"\r\n    xmlns=\"http://www.w3.org/2000/svg\"\r\n    xmlns:xlink=\"http://www.w3.org/1999/xlink\"\r\n>\r\n    <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n        <g transform=\"translate(-154.000000, -424.000000)\" stroke=\"#1B1D1F\">\r\n            <g transform=\"translate(154.000000, 424.000000)\">\r\n                <g>\r\n                    <path\r\n                        d=\"M6.44738084,2.76639924 L5.52713544,2.76639924 L5.52713544,1.84615385 L6.44738084,1.84615385 L6.44738084,2.76639924 Z M6.44738084,3.68664464 L5.52713544,3.68664464 L5.52713544,4.60689004 L6.44738084,4.60689004 L6.44738084,3.68664464 Z M6.44738084,5.52713544 L5.52713544,5.52713544 L5.52713544,6.44738084 L6.44738084,6.44738084 L6.44738084,5.52713544 Z M6.44738084,7.36762624 L5.52713544,7.36762624 L5.52713544,8.28787164 L6.44738084,8.28787164 L6.44738084,7.36762624 Z M6.44738084,9.20811704 L5.52713544,9.20811704 L5.52713544,10.1283624 L6.44738084,10.1283624 L6.44738084,9.20811704 Z M2.76639924,5.52713544 L1.84615385,5.52713544 L1.84615385,6.44738084 L2.76639924,6.44738084 L2.76639924,5.52713544 Z M4.60689004,5.52713544 L3.68664464,5.52713544 L3.68664464,6.44738084 L4.60689004,6.44738084 L4.60689004,5.52713544 Z M8.28787164,5.52713544 L7.36762624,5.52713544 L7.36762624,6.44738084 L8.28787164,6.44738084 L8.28787164,5.52713544 Z M10.1283624,5.52713544 L9.20811704,5.52713544 L9.20811704,6.44738084 L10.1283624,6.44738084 L10.1283624,5.52713544 Z\"\r\n                        stroke-width=\"0.2\"\r\n                        fill=\"#1B1D1F\"\r\n                        fill-rule=\"nonzero\"\r\n                    ></path>\r\n                    <rect\r\n                        stroke-width=\"1.1\"\r\n                        x=\"0.55\"\r\n                        y=\"0.55\"\r\n                        width=\"10.9\"\r\n                        height=\"10.9\"\r\n                        rx=\"2.76923077\"\r\n                    ></rect>\r\n                </g>\r\n            </g>\r\n        </g>\r\n    </g>\r\n</svg>`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MORE_SVG",
+          "declaration": {
+            "name": "MORE_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "TITLE_SVG",
+          "declaration": {
+            "name": "TITLE_SVG",
+            "module": "src/icon.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/types.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "GridItemReizeName",
+          "type": {
+            "text": "string"
+          },
+          "default": "'gridItemResize'"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "GridItemReizeName",
+          "declaration": {
+            "name": "GridItemReizeName",
+            "module": "src/types.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/assets/lit-core.min.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "s"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "o",
+          "members": [
+            {
+              "kind": "field",
+              "name": "styleSheet"
+            },
+            {
+              "kind": "method",
+              "name": "toString"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "h",
+          "parameters": [
+            {
+              "name": "t"
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "r",
+          "default": "(t, ...s) => {\r\n        const e =\r\n            1 === t.length\r\n                ? t[0]\r\n                : s.reduce(\r\n                      (s, i, e) =>\r\n                          s +\r\n                          (t => {\r\n                              if (!0 === t._$cssResult$) return t.cssText\r\n                              if ('number' == typeof t) return t\r\n                              throw Error(\r\n                                  \"Value passed to 'css' function must be a 'css' function result: \" +\r\n                                      t +\r\n                                      \". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.\"\r\n                              )\r\n                          })(i) +\r\n                          t[e + 1],\r\n                      t[0]\r\n                  )\r\n        return new o(e, t, i)\r\n    }"
+        },
+        {
+          "kind": "variable",
+          "name": "n",
+          "default": "(i, e) => {\r\n        if (s) i.adoptedStyleSheets = e.map(t => (t instanceof CSSStyleSheet ? t : t.styleSheet))\r\n        else\r\n            for (const s of e) {\r\n                const e = document.createElement('style'),\r\n                    o = t.litNonce\r\n                void 0 !== o && e.setAttribute('nonce', o),\r\n                    (e.textContent = s.cssText),\r\n                    i.appendChild(e)\r\n            }\r\n    }"
+        },
+        {
+          "kind": "variable",
+          "name": "c"
+        },
+        {
+          "kind": "variable",
+          "name": "b",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\r\n        toAttribute(t, s) {\r\n            switch (s) {\r\n                case Boolean:\r\n                    t = t ? y : null\r\n                    break\r\n                case Object:\r\n                case Array:\r\n                    t = null == t ? t : JSON.stringify(t)\r\n            }\r\n            return t\r\n        },\r\n        fromAttribute(t, s) {\r\n            let i = t\r\n            switch (s) {\r\n                case Boolean:\r\n                    i = null !== t\r\n                    break\r\n                case Number:\r\n                    i = null === t ? null : Number(t)\r\n                    break\r\n                case Object:\r\n                case Array:\r\n                    try {\r\n                        i = JSON.parse(t)\r\n                    } catch (t) {\r\n                        i = null\r\n                    }\r\n            }\r\n            return i\r\n        }\r\n    }"
+        },
+        {
+          "kind": "variable",
+          "name": "S",
+          "default": "(t, s) => !a(t, s)"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "$",
+          "members": [
+            {
+              "kind": "method",
+              "name": "addInitializer",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "createProperty",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s",
+                  "default": "w"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getPropertyDescriptor",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                },
+                {
+                  "name": "i"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getPropertyOptions",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "o",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "finalize",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "finalizeStyles",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "p",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "g"
+            },
+            {
+              "kind": "method",
+              "name": "addController",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "removeController",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "S"
+            },
+            {
+              "kind": "method",
+              "name": "createRenderRoot"
+            },
+            {
+              "kind": "method",
+              "name": "enableUpdating",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "P",
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_$AK",
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "C",
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                },
+                {
+                  "name": "i"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "T"
+            },
+            {
+              "kind": "method",
+              "name": "scheduleUpdate"
+            },
+            {
+              "kind": "method",
+              "name": "_$AE",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "M"
+            },
+            {
+              "kind": "field",
+              "name": "updateComplete"
+            },
+            {
+              "kind": "method",
+              "name": "getUpdateComplete"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        },
+        {
+          "kind": "variable",
+          "name": "q"
+        },
+        {
+          "kind": "variable",
+          "name": "J"
+        },
+        {
+          "kind": "variable",
+          "name": "Z"
+        },
+        {
+          "kind": "variable",
+          "name": "F"
+        },
+        {
+          "kind": "variable",
+          "name": "ct",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\r\n        B: x,\r\n        W: A,\r\n        q: M,\r\n        J: 1,\r\n        Z: X,\r\n        F: st,\r\n        G: R,\r\n        K: tt,\r\n        X: it,\r\n        Y: et,\r\n        tt: ht,\r\n        st: rt,\r\n        it: ot,\r\n        et: nt\r\n    }"
+        },
+        {
+          "kind": "function",
+          "name": "lt",
+          "parameters": [
+            {
+              "name": "t"
+            },
+            {
+              "name": "s"
+            },
+            {
+              "name": "i"
+            }
+          ]
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ut",
+          "members": [
+            {
+              "kind": "method",
+              "name": "createRenderRoot",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "addInitializer",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "createProperty",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s",
+                  "default": "w"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getPropertyDescriptor",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                },
+                {
+                  "name": "i"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getPropertyOptions",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "o",
+              "static": true,
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "finalize",
+              "static": true,
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "finalizeStyles",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "p",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "g",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "addController",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeController",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "S",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "enableUpdating",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "P",
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_$AK",
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "C",
+              "parameters": [
+                {
+                  "name": "t"
+                },
+                {
+                  "name": "s"
+                },
+                {
+                  "name": "i"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "T",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "scheduleUpdate",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_$AE",
+              "parameters": [
+                {
+                  "name": "t"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "M",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "updateComplete",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getUpdateComplete",
+              "inheritedFrom": {
+                "name": "$",
+                "module": "src/assets/lit-core.min.js"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "$",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "variable",
+          "name": "ft",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\r\n    _$AK: (t, s, i) => {\r\n        t._$AK(s, i)\r\n    },\r\n    _$AL: t => t._$AL\r\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "pt",
+          "type": {
+            "text": "boolean"
+          },
+          "default": "!1"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CSSResult",
+          "declaration": {
+            "name": "o",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "LitElement",
+          "declaration": {
+            "name": "ut",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ReactiveElement",
+          "declaration": {
+            "name": "$",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "_$LE",
+          "declaration": {
+            "name": "ft",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "_$LH",
+          "declaration": {
+            "name": "ct",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "adoptStyles",
+          "declaration": {
+            "name": "n",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "css",
+          "declaration": {
+            "name": "r",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "defaultConverter",
+          "declaration": {
+            "name": "b",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "getCompatibleStyle",
+          "declaration": {
+            "name": "c",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "html",
+          "declaration": {
+            "name": "q",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isServer",
+          "declaration": {
+            "name": "pt",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "noChange",
+          "declaration": {
+            "name": "Z",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "notEqual",
+          "declaration": {
+            "name": "S",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "nothing",
+          "declaration": {
+            "name": "F",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "render",
+          "declaration": {
+            "name": "lt",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "supportsAdoptingStyleSheets",
+          "declaration": {
+            "name": "s",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "svg",
+          "declaration": {
+            "name": "J",
+            "module": "src/assets/lit-core.min.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "unsafeCSS",
+          "declaration": {
+            "name": "h",
+            "module": "src/assets/lit-core.min.js"
+          }
+        }
+      ]
+    }
+  ]
+}

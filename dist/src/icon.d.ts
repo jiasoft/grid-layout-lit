@@ -1,2 +1,13 @@
 export declare const MORE_SVG: import("lit-html").TemplateResult<1>;
 export declare const TITLE_SVG: import("lit-html").TemplateResult<1>;
+export declare const DELETE_SVG: import("lit-html").TemplateResult<1>;
+export declare const ADD_SVG: import("lit-html").TemplateResult<1>;
+export declare const BACK_LAYOUT: import("lit-html").TemplateResult<1>;
+export declare const FORWARD_LAYOUT: import("lit-html").TemplateResult<1>;
+export declare const SAVE_LAYOUT: import("lit-html").TemplateResult<1>;
+export declare const CLOSE_LAYOUT: import("lit-html").TemplateResult<1>;
+export declare const EDIT_SVG: import("lit-html").TemplateResult<1>;
+export declare const STYLE_SVG: import("lit-html").TemplateResult<1>;
+export declare const ZINDEX_UP_SVG: import("lit-html").TemplateResult<1>;
+export declare const ZINDEX_DOWN_SVG: import("lit-html").TemplateResult<1>;
+export declare const DELETE_LAYOUT_SVG: import("lit-html").TemplateResult<1>;
