@@ -68,7 +68,7 @@
                 "text": "GridItemStyleType"
               },
               "privacy": "private",
-              "default": "{\r\n        borderRadius: 3,\r\n        borderColor: '#c3c3c3',\r\n        borderWidth: 1,\r\n        borderStyle: 'solid',\r\n        titleColor: '',\r\n        contentColor: '',\r\n        disableScrollBars: false\r\n    }",
+              "default": "{\n        borderRadius: 3,\n        borderColor: '#c3c3c3',\n        borderWidth: 1,\n        borderStyle: 'solid',\n        titleColor: '',\n        contentColor: '',\n        disableScrollBars: false\n    }",
               "description": "拖拽布局默认样式"
             },
             {
@@ -84,7 +84,7 @@
               "type": {
                 "text": "object"
               },
-              "default": "{\r\n        t: (k:string, b: boolean) => k,\r\n        tt: (k:string, b: boolean) => k,\r\n        locale: 'zh-cn'\r\n    }"
+              "default": "{\n        t: (k: string, b: boolean) => k,\n        tt: (k: string, b: boolean) => k,\n        locale: 'zh-cn'\n    }"
             },
             {
               "kind": "field",
@@ -169,7 +169,7 @@
                 "text": "object"
               },
               "default": "{ x: 0, y: 0, w: 60, h: 60, z: 0, id: DRAG_ID }",
-              "description": "底部占位阴影的数据\r\n(所有gridItem共用一个阴影)"
+              "description": "底部占位阴影的数据\n(所有gridItem共用一个阴影)"
             },
             {
               "kind": "field",
@@ -238,7 +238,7 @@
                 "text": "any[]"
               },
               "default": "[]",
-              "description": "暂时无用\r\n存储数据"
+              "description": "暂时无用\n存储数据"
             },
             {
               "kind": "field",
@@ -291,6 +291,14 @@
             },
             {
               "kind": "field",
+              "name": "defaultRightMargin",
+              "type": {
+                "text": "number"
+              },
+              "default": "3"
+            },
+            {
+              "kind": "field",
               "name": "isDisableScrollBars",
               "type": {
                 "text": "boolean"
@@ -336,7 +344,7 @@
             {
               "kind": "field",
               "name": "findGridItemData",
-              "default": "(id: any): GridItemData | undefined => {\r\n        return this.layoutData.find((item: GridItemData) => item.id === id)\r\n    }",
+              "default": "(id: any): GridItemData | undefined => {\n        return this.layoutData.find((item: GridItemData) => item.id === id)\n    }",
               "description": "查找GridItem",
               "parameters": [
                 {
@@ -439,13 +447,13 @@
             {
               "kind": "field",
               "name": "findBigestOverlapItem",
-              "default": "(\r\n        dataList: GridItemData[],\r\n        x: number,\r\n        y: number,\r\n        w: number, //每个网格宽度所占的像素值\r\n        h: number, //每个网格高度所占的像素值\r\n        exceptIds: any[],\r\n        exceptFloatItem: boolean = true\r\n    ): GridItemData | undefined => {\r\n        const list = this.findOverlapItem(dataList, x, y, w, h, exceptIds, 0, exceptFloatItem)\r\n        let BigestOverlapArea = -99999999999 //最大的重叠交叉面积\r\n        let BigestOverlapItem: any = undefined\r\n        list.forEach((item: any) => {\r\n            const curItemX = item.x\r\n            const curItemY = item.y\r\n            const curItemW = item.w\r\n            const curItemH = item.h\r\n            const overX1 = Math.max(x, curItemX)\r\n            const overX2 = Math.min(x + w, curItemX + curItemW)\r\n            const overW = overX2 - overX1\r\n            const overY1 = Math.max(y, curItemY)\r\n            const overY2 = Math.min(y + h, curItemY + curItemH)\r\n            const overH = overY2 - overY1\r\n            const overArea = overH * overW\r\n            if (overArea > BigestOverlapArea) {\r\n                BigestOverlapArea = overArea\r\n                BigestOverlapItem = item\r\n            }\r\n        })\r\n\r\n        return BigestOverlapItem\r\n    }",
+              "default": "(\n        dataList: GridItemData[],\n        x: number,\n        y: number,\n        w: number, //每个网格宽度所占的像素值\n        h: number, //每个网格高度所占的像素值\n        exceptIds: any[],\n        exceptFloatItem: boolean = true\n    ): GridItemData | undefined => {\n        const list = this.findOverlapItem(dataList, x, y, w, h, exceptIds, 0, exceptFloatItem)\n        let BigestOverlapArea = -99999999999 //最大的重叠交叉面积\n        let BigestOverlapItem: any = undefined\n        list.forEach((item: any) => {\n            const curItemX = item.x\n            const curItemY = item.y\n            const curItemW = item.w\n            const curItemH = item.h\n            const overX1 = Math.max(x, curItemX)\n            const overX2 = Math.min(x + w, curItemX + curItemW)\n            const overW = overX2 - overX1\n            const overY1 = Math.max(y, curItemY)\n            const overY2 = Math.min(y + h, curItemY + curItemH)\n            const overH = overY2 - overY1\n            const overArea = overH * overW\n            if (overArea > BigestOverlapArea) {\n                BigestOverlapArea = overArea\n                BigestOverlapItem = item\n            }\n        })\n\n        return BigestOverlapItem\n    }",
               "description": "查找存在的最大的重叠交叉项"
             },
             {
               "kind": "field",
               "name": "findOverlapItem",
-              "default": "(\r\n        dataList: GridItemData[],\r\n        x: number,\r\n        y: number,\r\n        w: number,\r\n        h: number,\r\n        exceptIds: any[],\r\n        overCount: number = 0,\r\n        exceptFloatItem: boolean = true\r\n    ): GridItemData[] => {\r\n        const list: GridItemData[] = []\r\n        let data = [...dataList]\r\n        if (exceptFloatItem) data = data.filter((item: any) => !item.float)\r\n        if (this.curActiveGridItem && this.dragData) {\r\n            // 如果有正在拖动的 那么 将正在拖动的项目添加到列表中\r\n            if (!data.find(item => item.id === this.dragData.id)) {\r\n                data = [...data, this.dragData]\r\n            }\r\n        }\r\n        for (let i = 0; i < data.length; i++) {\r\n            const item = data[i]\r\n            // 如果当前项目正在排出列表中 直接跳过循环\r\n            if (exceptIds && exceptIds.indexOf(item.id) >= 0) {\r\n                continue\r\n            }\r\n            // 当前项目的位置 大小 信息\r\n            const curItemX = item.x\r\n            const curItemY = item.y\r\n            const curItemW = item.w\r\n            const curItemH = item.h\r\n            // 对比项目(传入的) 与当前项目 对比 取出较小的\r\n            const x1 = Math.min(curItemX, x)\r\n            // 对比项目(传入的) 与当前项目 对比 取出较大的\r\n            const x2 = Math.max(curItemX + curItemW, x + w)\r\n\r\n            const y1 = Math.min(curItemY, y)\r\n            const y2 = Math.max(curItemY + curItemH, y + h)\r\n\r\n            //是否存在交叉的算法\r\n            // 假如两个项目重叠  那么 第一个项目的最左侧 + 第二个项目的最右侧 的 宽度 一定小于 两个 项目的宽度和\r\n            // 高度同上\r\n            if (\r\n                x2 - x1 - (curItemW + w) + overCount < this.gridMargin &&\r\n                y2 - y1 - (curItemH + h) + overCount < this.gridMargin\r\n            ) {\r\n                list.push(item)\r\n            }\r\n        }\r\n        return list\r\n    }",
+              "default": "(\n        dataList: GridItemData[],\n        x: number,\n        y: number,\n        w: number,\n        h: number,\n        exceptIds: any[],\n        overCount: number = 0,\n        exceptFloatItem: boolean = true\n    ): GridItemData[] => {\n        const list: GridItemData[] = []\n        let data = [...dataList]\n        if (exceptFloatItem) data = data.filter((item: any) => !item.float)\n        if (this.curActiveGridItem && this.dragData) {\n            // 如果有正在拖动的 那么 将正在拖动的项目添加到列表中\n            if (!data.find(item => item.id === this.dragData.id)) {\n                data = [...data, this.dragData]\n            }\n        }\n        for (let i = 0; i < data.length; i++) {\n            const item = data[i]\n            // 如果当前项目正在排出列表中 直接跳过循环\n            if (exceptIds && exceptIds.indexOf(item.id) >= 0) {\n                continue\n            }\n            // 当前项目的位置 大小 信息\n            const curItemX = item.x\n            const curItemY = item.y\n            const curItemW = item.w\n            const curItemH = item.h\n            // 对比项目(传入的) 与当前项目 对比 取出较小的\n            const x1 = Math.min(curItemX, x)\n            // 对比项目(传入的) 与当前项目 对比 取出较大的\n            const x2 = Math.max(curItemX + curItemW, x + w)\n\n            const y1 = Math.min(curItemY, y)\n            const y2 = Math.max(curItemY + curItemH, y + h)\n\n            //是否存在交叉的算法\n            // 假如两个项目重叠  那么 第一个项目的最左侧 + 第二个项目的最右侧 的 宽度 一定小于 两个 项目的宽度和\n            // 高度同上\n            if (\n                x2 - x1 - (curItemW + w) + overCount < this.gridMargin &&\n                y2 - y1 - (curItemH + h) + overCount < this.gridMargin\n            ) {\n                list.push(item)\n            }\n        }\n        return list\n    }",
               "description": "获取交叉的GridItem 列表",
               "parameters": [
                 {
@@ -534,7 +542,7 @@
             {
               "kind": "method",
               "name": "gridItemResizeEnd",
-              "description": "结束改变大小\r\nResize end"
+              "description": "结束改变大小\nResize end"
             },
             {
               "kind": "method",
@@ -655,7 +663,7 @@
             {
               "kind": "field",
               "name": "calcNearPosition",
-              "default": "(left: number, top: number): GridPosition => {\r\n        const x = Math.round(left / this.griddingWidth)\r\n        const y = Math.round(top / this.griddingHeight)\r\n        return { x, y }\r\n    }",
+              "default": "(left: number, top: number): GridPosition => {\n        const x = Math.round(left / this.griddingWidth)\n        const y = Math.round(top / this.griddingHeight)\n        return { x, y }\n    }",
               "description": "转换成的GidPosition",
               "parameters": [
                 {
@@ -695,8 +703,8 @@
             {
               "kind": "field",
               "name": "getBackLayout",
-              "default": "() => {\r\n        this.dataStoreIndex--\r\n        return this.dataStore[this.dataStoreIndex]\r\n    }",
-              "description": "无用代码\r\n返回 上次的layout",
+              "default": "() => {\n        this.dataStoreIndex--\n        return this.dataStore[this.dataStoreIndex]\n    }",
+              "description": "无用代码\n返回 上次的layout",
               "return": {
                 "type": {
                   "text": ""
@@ -706,49 +714,43 @@
             {
               "kind": "field",
               "name": "backLayout",
-              "default": "() => {\r\n        const data = this.getBackLayout()\r\n        if (data) {\r\n            this.layoutData = JSON.parse(data)\r\n        }\r\n    }",
-              "description": "// 无用代码\r\n打开上次的保存layout"
+              "default": "() => {\n        const data = this.getBackLayout()\n        if (data) {\n            this.layoutData = JSON.parse(data)\n        }\n    }",
+              "description": "// 无用代码\n打开上次的保存layout"
             },
             {
               "kind": "field",
               "name": "getForwardLayout",
-              "default": "() => {\r\n        this.dataStoreIndex =\r\n            this.dataStore.length - 1 > this.dataStoreIndex\r\n                ? this.dataStoreIndex + 1\r\n                : this.dataStore.length - 1\r\n        return this.dataStore[this.dataStoreIndex]\r\n    }",
+              "default": "() => {\n        this.dataStoreIndex =\n            this.dataStore.length - 1 > this.dataStoreIndex\n                ? this.dataStoreIndex + 1\n                : this.dataStore.length - 1\n        return this.dataStore[this.dataStoreIndex]\n    }",
               "description": "调试代码 无用 下一个layout"
             },
             {
               "kind": "field",
               "name": "forwardLayout",
-              "default": "() => {\r\n        const data = this.getForwardLayout()\r\n        if (data) {\r\n            this.layoutData = JSON.parse(data)\r\n        }\r\n    }",
-              "description": "调试代码 无用\r\n打开下一步的layout"
+              "default": "() => {\n        const data = this.getForwardLayout()\n        if (data) {\n            this.layoutData = JSON.parse(data)\n        }\n    }",
+              "description": "调试代码 无用\n打开下一步的layout"
             },
             {
               "kind": "field",
               "name": "close",
-              "default": "() => {\r\n        const emit: any = new Event('close')\r\n        emit.detail = this.layoutData\r\n        this.dispatchEvent(emit)\r\n    }",
-              "description": "调试代码, 无用\r\n关闭事件"
+              "default": "() => {\n        const emit: any = new Event('close')\n        emit.detail = this.layoutData\n        this.dispatchEvent(emit)\n    }",
+              "description": "调试代码, 无用\n关闭事件"
             },
             {
               "kind": "field",
               "name": "save",
-              "default": "() => {\r\n        const emit: any = new Event('save')\r\n        emit.detail = this.layoutData\r\n        this.dispatchEvent(emit)\r\n    }",
+              "default": "() => {\n        const emit: any = new Event('save')\n        emit.detail = this.layoutData\n        this.dispatchEvent(emit)\n    }",
               "description": "测试代码 无用"
             },
             {
               "kind": "field",
               "name": "gridItemCopyBySubMenu",
-              "default": "() => {\r\n        if (!this.curGridItemSubMenuGridData) return\r\n        const emit: any = new Event('gridItemCopy')\r\n        emit.detail = this.curGridItemSubMenuGridData\r\n        this.closeGridItemSubMenu()\r\n        this.reRender()\r\n        this.dispatchEvent(emit)\r\n    }",
+              "default": "() => {\n        if (!this.curGridItemSubMenuGridData) return\n        const emit: any = new Event('gridItemCopy')\n        emit.detail = this.curGridItemSubMenuGridData\n        this.closeGridItemSubMenu()\n        this.reRender()\n        this.dispatchEvent(emit)\n    }",
               "description": "复杂",
               "return": {
                 "type": {
                   "text": ""
                 }
               }
-            },
-            {
-              "kind": "field",
-              "name": "gridItemExportBySubMenu",
-              "default": "() => {\r\n        this.closeGridItemSubMenu()\r\n        this.reRender()\r\n    }",
-              "description": "导出"
             },
             {
               "kind": "method",
@@ -815,7 +817,7 @@
                   }
                 }
               ],
-              "description": "无用代码,暂时保留\r\n计算两项交叉面积",
+              "description": "无用代码,暂时保留\n计算两项交叉面积",
               "return": {
                 "type": {
                   "text": ""
@@ -967,7 +969,7 @@
             {
               "kind": "method",
               "name": "dialogClose",
-              "description": "无用代码\r\n关闭"
+              "description": "无用代码\n关闭"
             },
             {
               "kind": "field",
@@ -986,7 +988,7 @@
               "kind": "field",
               "name": "bindHnd",
               "type": {
-                "text": "{[s: string]: any}"
+                "text": "{ [s: string]: any }"
               },
               "default": "{}",
               "description": "绑定事件"
@@ -1086,12 +1088,67 @@
         {
           "kind": "variable",
           "name": "MORE_SVG",
-          "default": "html`<svg\r\n    xmlns=\"http://www.w3.org/2000/svg\"\r\n    width=\"16\"\r\n    height=\"16\"\r\n    fill=\"currentColor\"\r\n    class=\"bi bi-three-dots\"\r\n    viewBox=\"0 0 16 16\"\r\n>\r\n    <path\r\n        d=\"M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z\"\r\n    />\r\n</svg>`"
+          "default": "html`<svg\n    xmlns=\"http://www.w3.org/2000/svg\"\n    width=\"16\"\n    height=\"16\"\n    fill=\"currentColor\"\n    class=\"bi bi-three-dots\"\n    viewBox=\"0 0 16 16\"\n>\n    <path\n        d=\"M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z\"\n    />\n</svg>`"
         },
         {
           "kind": "variable",
           "name": "TITLE_SVG",
-          "default": "html` <svg\r\n    width=\"13px\"\r\n    height=\"13px\"\r\n    viewBox=\"0 0 13 13\"\r\n    version=\"1.1\"\r\n    xmlns=\"http://www.w3.org/2000/svg\"\r\n    xmlns:xlink=\"http://www.w3.org/1999/xlink\"\r\n>\r\n    <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n        <g transform=\"translate(-154.000000, -424.000000)\" stroke=\"#1B1D1F\">\r\n            <g transform=\"translate(154.000000, 424.000000)\">\r\n                <g>\r\n                    <path\r\n                        d=\"M6.44738084,2.76639924 L5.52713544,2.76639924 L5.52713544,1.84615385 L6.44738084,1.84615385 L6.44738084,2.76639924 Z M6.44738084,3.68664464 L5.52713544,3.68664464 L5.52713544,4.60689004 L6.44738084,4.60689004 L6.44738084,3.68664464 Z M6.44738084,5.52713544 L5.52713544,5.52713544 L5.52713544,6.44738084 L6.44738084,6.44738084 L6.44738084,5.52713544 Z M6.44738084,7.36762624 L5.52713544,7.36762624 L5.52713544,8.28787164 L6.44738084,8.28787164 L6.44738084,7.36762624 Z M6.44738084,9.20811704 L5.52713544,9.20811704 L5.52713544,10.1283624 L6.44738084,10.1283624 L6.44738084,9.20811704 Z M2.76639924,5.52713544 L1.84615385,5.52713544 L1.84615385,6.44738084 L2.76639924,6.44738084 L2.76639924,5.52713544 Z M4.60689004,5.52713544 L3.68664464,5.52713544 L3.68664464,6.44738084 L4.60689004,6.44738084 L4.60689004,5.52713544 Z M8.28787164,5.52713544 L7.36762624,5.52713544 L7.36762624,6.44738084 L8.28787164,6.44738084 L8.28787164,5.52713544 Z M10.1283624,5.52713544 L9.20811704,5.52713544 L9.20811704,6.44738084 L10.1283624,6.44738084 L10.1283624,5.52713544 Z\"\r\n                        stroke-width=\"0.2\"\r\n                        fill=\"#1B1D1F\"\r\n                        fill-rule=\"nonzero\"\r\n                    ></path>\r\n                    <rect\r\n                        stroke-width=\"1.1\"\r\n                        x=\"0.55\"\r\n                        y=\"0.55\"\r\n                        width=\"10.9\"\r\n                        height=\"10.9\"\r\n                        rx=\"2.76923077\"\r\n                    ></rect>\r\n                </g>\r\n            </g>\r\n        </g>\r\n    </g>\r\n</svg>`"
+          "default": "html` <svg\n    width=\"13px\"\n    height=\"13px\"\n    viewBox=\"0 0 13 13\"\n    version=\"1.1\"\n    xmlns=\"http://www.w3.org/2000/svg\"\n    xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n    <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <g transform=\"translate(-154.000000, -424.000000)\" stroke=\"#1B1D1F\">\n            <g transform=\"translate(154.000000, 424.000000)\">\n                <g>\n                    <path\n                        d=\"M6.44738084,2.76639924 L5.52713544,2.76639924 L5.52713544,1.84615385 L6.44738084,1.84615385 L6.44738084,2.76639924 Z M6.44738084,3.68664464 L5.52713544,3.68664464 L5.52713544,4.60689004 L6.44738084,4.60689004 L6.44738084,3.68664464 Z M6.44738084,5.52713544 L5.52713544,5.52713544 L5.52713544,6.44738084 L6.44738084,6.44738084 L6.44738084,5.52713544 Z M6.44738084,7.36762624 L5.52713544,7.36762624 L5.52713544,8.28787164 L6.44738084,8.28787164 L6.44738084,7.36762624 Z M6.44738084,9.20811704 L5.52713544,9.20811704 L5.52713544,10.1283624 L6.44738084,10.1283624 L6.44738084,9.20811704 Z M2.76639924,5.52713544 L1.84615385,5.52713544 L1.84615385,6.44738084 L2.76639924,6.44738084 L2.76639924,5.52713544 Z M4.60689004,5.52713544 L3.68664464,5.52713544 L3.68664464,6.44738084 L4.60689004,6.44738084 L4.60689004,5.52713544 Z M8.28787164,5.52713544 L7.36762624,5.52713544 L7.36762624,6.44738084 L8.28787164,6.44738084 L8.28787164,5.52713544 Z M10.1283624,5.52713544 L9.20811704,5.52713544 L9.20811704,6.44738084 L10.1283624,6.44738084 L10.1283624,5.52713544 Z\"\n                        stroke-width=\"0.2\"\n                        fill=\"#1B1D1F\"\n                        fill-rule=\"nonzero\"\n                    ></path>\n                    <rect\n                        stroke-width=\"1.1\"\n                        x=\"0.55\"\n                        y=\"0.55\"\n                        width=\"10.9\"\n                        height=\"10.9\"\n                        rx=\"2.76923077\"\n                    ></rect>\n                </g>\n            </g>\n        </g>\n    </g>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "DELETE_SVG",
+          "default": "html`<svg\nwidth=\"12px\"\nheight=\"13px\"\nviewBox=\"0 0 12 13\"\nversion=\"1.1\"\nxmlns=\"http://www.w3.org/2000/svg\"\nxmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n<title>删除</title>\n<g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n    <g\n        transform=\"translate(-170.000000, -665.000000)\"\n        fill-rule=\"nonzero\"\n    >\n        <g id=\"删除-01\" transform=\"translate(170.000000, 665.000000)\">\n            <path\n                d=\"M10.9125,2.03625 L8.86265625,2.03625 L8.86265625,1.38328125 L8.86109375,1.31953125 C8.82703125,0.615625 8.24640625,0.06234375 7.5415625,0.06234375 L3.95828125,0.06234375 L3.89453125,0.06390625 C3.190625,0.09796875 2.63734375,0.67859375 2.63734375,1.3834375 L2.63734375,2.03640625 L0.5875,2.03640625 L0.54375,2.03828125 C0.26828125,2.06109375 0.05640625,2.29125 0.056249923,2.56765625 C0.05609375,2.86109375 0.29390625,3.09921875 0.5875,3.099375 L10.9125,3.099375 L10.95625,3.0975 C11.2317187,3.0746875 11.4435937,2.84453125 11.4437501,2.568125 C11.4439062,2.274375 11.2060937,2.03640625 10.9125,2.03625 Z M7.79984375,2.03625 L3.70015625,2.03625 L3.70015625,1.38328125 L3.70234375,1.35078125 C3.71875,1.221875 3.8284375,1.12515625 3.95828125,1.12515625 L7.54171875,1.12515625 L7.57421875,1.12734375 C7.703125,1.14375 7.79984375,1.2534375 7.79984375,1.38328125 L7.79984375,2.03625 L7.79984375,2.03625 Z\"\n                fill=\"#1B1D1F\"\n            ></path>\n            <path\n                d=\"M0.5875,3.1521875 C0.26515625,3.15203125 0.003125,2.8896875 0.003125,2.56734375 C0.00328125,2.26578125 0.23875,2.01 0.539375,1.985 L0.5853125,1.983125 L2.58421875,1.983125 L2.58421875,1.38328125 C2.58421875,0.6490625 3.15859375,0.04625 3.89203125,0.01078125 L3.95703125,0.00921875 L7.54171875,0.00921875 C8.2759375,0.00921875 8.87875,0.58359375 8.91421875,1.31703125 L8.91578125,1.38203125 L8.91578125,1.983125 L10.9125,1.983125 C11.2348437,1.98328125 11.496875,2.245625 11.4967188,2.56796875 C11.4965625,2.86953125 11.2610937,3.1253125 10.960625,3.15015625 L10.9146875,3.1521875 L0.5875,3.1521875 L0.5875,3.1521875 Z M0.5875,2.089375 L0.5459375,2.09109375 C0.3021875,2.11140625 0.10953125,2.320625 0.109374915,2.5675 C0.10921875,2.83125 0.32375,3.0459375 0.5875,3.04609375 L10.9125,3.04609375 L10.9540625,3.044375 C11.1978125,3.0240625 11.3904687,2.81484375 11.3906251,2.56796875 C11.3907812,2.30421875 11.17625,2.08953125 10.9125,2.089375 L8.8096875,2.089375 L8.8096875,1.38328125 L8.808125,1.32078125 C8.77546875,0.64546875 8.21921875,0.1153125 7.54171875,0.1153125 L3.95828125,0.1153125 L3.89578125,0.116875 C3.22046875,0.14953125 2.6903125,0.70578125 2.6903125,1.38328125 L2.6903125,2.089375 L0.5875,2.089375 Z M7.85296875,2.089375 L3.64703125,2.089375 L3.6471875,1.37984375 L3.6496875,1.3440625 C3.669375,1.1890625 3.80203125,1.07203125 3.95828125,1.07203125 L7.54515625,1.0721875 L7.5809375,1.0746875 C7.7359375,1.094375 7.85296875,1.22703125 7.85296875,1.38328125 L7.85296875,2.089375 Z M3.75328125,1.983125 L7.74671875,1.983125 L7.74671875,1.38328125 C7.74671875,1.28078125 7.6703125,1.19375 7.5690625,1.18015625 L7.54,1.17828125 L3.95828125,1.17828125 C3.85578125,1.17828125 3.76875,1.25453125 3.75515625,1.3559375 L3.75328125,1.385 L3.75328125,1.983125 L3.75328125,1.983125 Z M10.0015625,3.98171875 C10.278125,3.98171875 10.5084375,4.18421875 10.53125,4.4471875 L10.533125,4.48890625 L10.533125,10.2853125 C10.533125,11.4979688 9.524375,12.4917188 8.254375,12.5303125 L8.1796875,12.5314063 L3.320625,12.5314063 C2.04984375,12.5314063 1.00859375,11.56875 0.96828125,10.3565625 L0.96703125,10.2853125 L0.96703125,4.48890625 C0.9671875,4.20875 1.20515625,3.981875 1.49875,3.981875 C1.77515625,3.98203125 2.0053125,4.18421875 2.028125,4.44703125 L2.03,4.48875 L2.03,10.2851563 C2.03,10.9421875 2.57046875,11.4835938 3.258125,11.5154688 L3.320625,11.516875 L8.17953125,11.516875 C8.86796875,11.516875 9.4353125,11.0010938 9.46859375,10.3448438 L9.47015625,10.2851563 L9.47015625,4.48890625 C9.47,4.20890625 9.708125,3.98171875 10.0015625,3.98171875 Z\"\n                fill=\"#1B1D1F\"\n            ></path>\n            <path\n                d=\"M3.320625,12.5845312 C2.69265625,12.5845312 2.09828125,12.3546875 1.64703125,11.9375 C1.19515625,11.5196875 0.9353125,10.9589063 0.9153125,10.3582813 L0.9140625,10.2860938 L0.9140625,4.48875 C0.91421875,4.17984375 1.17640625,3.92875 1.49859375,3.92875 L1.49890625,3.92875 C1.8003125,3.92890625 2.05609375,4.15453125 2.08109375,4.4425 L2.083125,4.4865625 L2.083125,10.2853125 C2.083125,10.9148437 2.6003125,11.4320312 3.260625,11.4625 L3.32203125,11.4639063 L8.1796875,11.4639063 C8.84078125,11.4639063 9.38375,10.97125 9.41578125,10.3423438 L9.4171875,10.2839063 L9.4171875,4.48875 C9.4171875,4.17984375 9.679375,3.9284375 10.0017188,3.9284375 C10.3034375,3.9284375 10.5592187,4.15421875 10.5842187,4.4425 L10.58625,4.4865625 L10.58625,10.2853125 C10.58625,10.88625 10.3451563,11.4546875 9.90734375,11.8859375 C9.47015625,12.3167188 8.88375,12.564375 8.25609375,12.5832813 L8.180625,12.584375 L3.320625,12.584375 L3.320625,12.5845312 Z M1.4984375,4.035 C1.2346875,4.035 1.02015625,4.23859375 1.02015625,4.48890625 L1.02015625,10.2853125 L1.02140625,10.3557812 C1.0609375,11.545625 2.0709375,12.4784375 3.320625,12.4784375 L8.17953125,12.4784375 L8.2534375,12.4773437 C9.5015625,12.4395312 10.48,11.4767187 10.48,10.2854687 L10.48,4.48890625 L10.4782813,4.44953125 C10.458125,4.21796875 10.24875,4.03484375 10.0017188,4.03484375 C9.73796875,4.03484375 9.5234375,4.23859375 9.5234375,4.48890625 L9.5234375,10.2853125 L9.521875,10.3464062 C9.48703125,11.0332812 8.8975,11.5701563 8.1796875,11.5701563 L3.320625,11.5701563 L3.256875,11.56875 C2.53859375,11.5354687 1.976875,10.971875 1.976875,10.2853125 L1.976875,4.48890625 L1.97515625,4.44953125 C1.955,4.21828125 1.745625,4.03515625 1.49875,4.03515625 C1.49859375,4.035 1.49859375,4.035 1.4984375,4.035 Z\"\n                fill=\"#1A1C41\"\n            ></path>\n            <path\n                d=\"M4.3834375,5.1409375 C4.66,5.1409375 4.8903125,5.3434375 4.913125,5.60640625 L4.915,5.648125 L4.915,9.1259375 C4.91484375,9.40609375 4.676875,9.63296875 4.38328125,9.63296875 C4.106875,9.6328125 3.87671875,9.430625 3.85390625,9.1678125 L3.85203125,9.12609375 L3.85203125,5.648125 C3.85203125,5.368125 4.09015625,5.1409375 4.3834375,5.1409375 L4.3834375,5.1409375 Z\"\n                fill=\"#1B1D1F\"\n            ></path>\n            <path\n                d=\"M4.3834375,9.68609375 L4.383125,9.68609375 C4.08171875,9.6859375 3.8259375,9.4603125 3.8009375,9.17234375 L3.79890625,9.12828125 L3.79890625,5.648125 C3.79890625,5.33921875 4.06109375,5.0878125 4.3834375,5.0878125 C4.68515625,5.0878125 4.94109375,5.31359375 4.9659375,5.601875 L4.96796875,5.6459375 L4.96796875,9.12609375 C4.9678125,9.43484375 4.705625,9.68609375 4.3834375,9.68609375 L4.3834375,9.68609375 Z M4.3834375,5.1940625 C4.1196875,5.1940625 3.90515625,5.3978125 3.90515625,5.648125 L3.90515625,9.1259375 L3.906875,9.1653125 C3.92703125,9.3965625 4.13640625,9.5796875 4.38328125,9.5796875 L4.3834375,9.5796875 C4.64703125,9.5796875 4.8615625,9.37609375 4.86171875,9.12578125 L4.86171875,5.648125 L4.86,5.60875 C4.84,5.3771875 4.63046875,5.1940625 4.3834375,5.1940625 Z\"\n                fill=\"#1A1C41\"\n            ></path>\n            <path\n                d=\"M7.1165625,5.1409375 C7.393125,5.1409375 7.6234375,5.3434375 7.64625,5.60640625 L7.648125,5.648125 L7.648125,9.1259375 C7.64796875,9.40609375 7.41,9.63296875 7.11640625,9.63296875 C6.84,9.6328125 6.60984375,9.430625 6.58703125,9.1678125 L6.58515625,9.12609375 L6.58515625,5.648125 C6.58515625,5.368125 6.82328125,5.1409375 7.1165625,5.1409375 Z\"\n                id=\"Path\"\n                fill=\"#1A1C41\"\n            ></path>\n            <path\n                d=\"M7.1165625,9.68609375 L7.11625,9.68609375 C6.81484375,9.6859375 6.5590625,9.4603125 6.5340625,9.17234375 L6.53203125,9.12828125 L6.53203125,5.648125 C6.53203125,5.33921875 6.79421875,5.0878125 7.1165625,5.0878125 C7.41828125,5.0878125 7.6740625,5.31359375 7.6990625,5.601875 L7.70109375,5.6459375 L7.70109375,9.12609375 C7.7009375,9.43484375 7.43875,9.68609375 7.1165625,9.68609375 Z M7.1165625,5.1940625 C6.8528125,5.1940625 6.63828125,5.3978125 6.63828125,5.648125 L6.63828125,9.1259375 L6.64,9.1653125 C6.66015625,9.3965625 6.86953125,9.5796875 7.11640625,9.5796875 L7.1165625,9.5796875 C7.38015625,9.5796875 7.59484375,9.37609375 7.59484375,9.12578125 L7.59484375,5.648125 L7.593125,5.60875 C7.57296875,5.3771875 7.36359375,5.1940625 7.1165625,5.1940625 Z\"\n                fill=\"#1B1D1F\"\n            ></path>\n        </g>\n    </g>\n</g>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "ADD_SVG",
+          "default": "html`<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\">\n<path\n    fill=\"currentColor\"\n    d=\"M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64h352z\"\n></path>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "BACK_LAYOUT",
+          "default": "html`<svg\nxmlns=\"http://www.w3.org/2000/svg\"\nwidth=\"16\"\nheight=\"16\"\nfill=\"currentColor\"\nclass=\"bi bi-reply\"\nviewBox=\"0 0 16 16\"\n>\n<path\n    d=\"M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z\"\n/>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "FORWARD_LAYOUT",
+          "default": "html`<svg\nxmlns=\"http://www.w3.org/2000/svg\"\nwidth=\"16\"\nheight=\"16\"\nfill=\"currentColor\"\nclass=\"bi bi-reply\"\nviewBox=\"0 0 16 16\"\n>\n<path\n    d=\"M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z\"\n/>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "SAVE_LAYOUT",
+          "default": "html`<svg\nxmlns=\"http://www.w3.org/2000/svg\"\nwidth=\"16\"\nheight=\"16\"\nfill=\"currentColor\"\nclass=\"bi bi-download\"\nviewBox=\"0 0 16 16\"\n>\n<path\n    d=\"M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z\"\n/>\n<path\n    d=\"M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z\"\n/>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "CLOSE_LAYOUT",
+          "default": "html`<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\">\n<path\n    fill=\"currentColor\"\n    d=\"M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z\"\n></path>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "EDIT_SVG",
+          "default": "html`<svg\nwidth=\"12px\"\nheight=\"12px\"\nviewBox=\"0 0 12 12\"\nversion=\"1.1\"\nxmlns=\"http://www.w3.org/2000/svg\"\nxmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n<g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n    <g\n        transform=\"translate(-170.000000, -595.000000)\"\n        fill=\"#1B1D1F\"\n        fill-rule=\"nonzero\"\n    >\n        <g transform=\"translate(170.000000, 595.000000)\">\n            <path\n                d=\"M4.62175,0 C4.9303878,0.00034235522 5.18534609,0.241039453 5.20343368,0.549146979 C5.22152128,0.857254505 4.99647771,1.12613034 4.69,1.16258334 L4.62175,1.16666667 L2.19916667,1.16666667 C1.66216943,1.16696043 1.21504462,1.57883263 1.17075,2.114 L1.16666667,2.19916667 L1.16666667,9.46866667 C1.16666667,10.01 1.58375001,10.4545 2.114,10.4970833 L2.19916667,10.5 L9.46866667,10.5 C10.0056639,10.4997062 10.4527887,10.087834 10.4970833,9.55266667 L10.5,9.46749999 L10.5,7.04433333 C10.5003423,6.73569553 10.7410394,6.48073724 11.049147,6.46264964 C11.3572545,6.44456205 11.6261303,6.66960562 11.6625833,6.97608333 L11.6666667,7.04433333 L11.6666667,9.46749999 C11.6663707,10.6376437 10.7498274,11.602642 9.58124999,11.6631667 L9.46749999,11.6666667 L2.19858334,11.6666667 C1.02843962,11.6663707 0.0634413082,10.7498274 0.00291667578,9.58124999 L0,9.46749999 L0,2.19858334 C0.000295958352,1.02843962 0.916839257,0.0634413082 2.08541667,0.00291667578 L2.19916667,0 L4.62233333,0 L4.62175,0 Z\"\n            ></path>\n            <path\n                d=\"M8.51814481,0.545955306 C9.21967708,-0.163078359 10.3583737,-0.184182376 11.0856979,0.498369596 C11.8130221,1.18092157 11.8641856,2.31864079 11.2010622,3.06371893 L11.1208695,3.14862712 L6.10882607,8.16056875 C6.01710374,8.25221108 5.89773212,8.31106673 5.76918642,8.32802657 L5.69194199,8.33333333 L3.9229855,8.33333333 C3.6240467,8.33333333 3.37243674,8.10956068 3.33746091,7.81268104 L3.33333333,7.74369314 L3.33333333,5.97477256 C3.33333333,5.84517058 3.37601274,5.71917529 3.45480169,5.61627133 L3.50610143,5.5573073 L8.51814481,0.545365661 L8.51814481,0.545955306 Z M10.2871013,1.37970654 C10.0498877,1.14274823 9.67291118,1.12070771 9.40969888,1.32840785 L9.35191297,1.37970654 L4.51263767,6.2188836 L4.51263767,7.15346331 L5.44723634,7.15346331 L10.2871013,2.31487588 C10.5240644,2.0776671 10.5461054,1.70069824 10.338401,1.43749128 L10.2871013,1.37970654 L10.2871013,1.37970654 Z\"\n            ></path>\n            <path\n                d=\"M7.67084394,1.42088116 C7.87873033,1.21302737 8.20879075,1.19227487 8.44107764,1.37245285 L8.49592762,1.42088116 L10.2464588,3.17130224 C10.4636475,3.38921586 10.4743082,3.73831475 10.270821,3.96907329 C10.0673337,4.19983184 9.71962425,4.23295283 9.47622507,4.04476236 L9.42137509,3.99633405 L7.67084394,2.24591297 C7.44305202,2.01806657 7.44305202,1.64872755 7.67084394,1.42088116 L7.67084394,1.42088116 Z\"\n            ></path>\n        </g>\n    </g>\n</g>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "STYLE_SVG",
+          "default": "html`<svg\nwidth=\"12px\"\nheight=\"12px\"\nviewBox=\"0 0 12 12\"\nversion=\"1.1\"\nxmlns=\"http://www.w3.org/2000/svg\"\nxmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n<title>样式配置</title>\n<desc>样式配置</desc>\n<g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n    <g transform=\"translate(-170.000000, -630.000000)\" stroke=\"#1B1D1F\">\n        <g transform=\"translate(170.000000, 630.000000)\">\n            <path\n                d=\"M6.44738084,2.76639924 L5.52713544,2.76639924 L5.52713544,1.84615385 L6.44738084,1.84615385 L6.44738084,2.76639924 Z M6.44738084,3.68664464 L5.52713544,3.68664464 L5.52713544,4.60689004 L6.44738084,4.60689004 L6.44738084,3.68664464 Z M6.44738084,5.52713544 L5.52713544,5.52713544 L5.52713544,6.44738084 L6.44738084,6.44738084 L6.44738084,5.52713544 Z M6.44738084,7.36762624 L5.52713544,7.36762624 L5.52713544,8.28787164 L6.44738084,8.28787164 L6.44738084,7.36762624 Z M6.44738084,9.20811704 L5.52713544,9.20811704 L5.52713544,10.1283624 L6.44738084,10.1283624 L6.44738084,9.20811704 Z M2.76639924,5.52713544 L1.84615385,5.52713544 L1.84615385,6.44738084 L2.76639924,6.44738084 L2.76639924,5.52713544 Z M4.60689004,5.52713544 L3.68664464,5.52713544 L3.68664464,6.44738084 L4.60689004,6.44738084 L4.60689004,5.52713544 Z M8.28787164,5.52713544 L7.36762624,5.52713544 L7.36762624,6.44738084 L8.28787164,6.44738084 L8.28787164,5.52713544 Z M10.1283624,5.52713544 L9.20811704,5.52713544 L9.20811704,6.44738084 L10.1283624,6.44738084 L10.1283624,5.52713544 Z\"\n                stroke-width=\"0.2\"\n                fill=\"#1B1D1F\"\n                fill-rule=\"nonzero\"\n            ></path>\n            <rect\n                stroke-width=\"1.1\"\n                x=\"0.55\"\n                y=\"0.55\"\n                width=\"10.9\"\n                height=\"10.9\"\n                rx=\"2.76923077\"\n            ></rect>\n        </g>\n    </g>\n</g>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "ZINDEX_UP_SVG",
+          "default": "html`<svg\nwidth=\"13px\"\nheight=\"13px\"\nviewBox=\"0 0 13 13\"\nversion=\"1.1\"\nxmlns=\"http://www.w3.org/2000/svg\"\nxmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n<!-- Generator: Sketch 61.1 (89650) - https://sketch.com -->\n<title>上一层</title>\n<desc>上一层</desc>\n<g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n    <g\n        transform=\"translate(-170.000000, -699.000000)\"\n        fill=\"#1B1D1F\"\n        fill-rule=\"nonzero\"\n    >\n        <g\n            transform=\"translate(176.500000, 705.500000) scale(-1, 1) translate(-176.500000, -705.500000) translate(170.000000, 699.000000)\"\n        >\n            <path\n                d=\"M12.1395399,3.87065972 C11.8207465,3.1188151 11.3665365,2.44314236 10.7853733,1.86338976 C10.2056207,1.28363715 9.52994792,0.828016493 8.7781033,0.50922309 C7.99945747,0.180555556 7.17285156,0.0126953125 6.31944444,0.0126953125 C5.46603733,0.0126953125 4.63943142,0.180555556 3.86078559,0.50922309 C3.10894097,0.828016493 2.43326823,1.28222656 1.85351563,1.86338976 C1.27376302,2.44314236 0.818142361,3.1188151 0.499348958,3.87065972 C0.169270833,4.64930556 0.00282118056,5.47732205 0.00282118056,6.32931858 C0.00282118056,7.1813151 0.169270833,8.0093316 0.499348958,8.78797743 C0.818142361,9.53982205 1.27235243,10.2154948 1.85351563,10.7952474 C2.43326823,11.375 3.10894097,11.8306207 3.86078559,12.1494141 C4.63943142,12.4794922 5.46744792,12.6459418 6.31944444,12.6459418 C7.17144097,12.6459418 7.99945747,12.4794922 8.7781033,12.1494141 C9.52994792,11.8306207 10.2056207,11.3764106 10.7853733,10.7952474 C11.3651259,10.2154948 11.8207465,9.53982205 12.1395399,8.78797743 C12.4696181,8.0093316 12.6360677,7.1813151 12.6360677,6.32931858 C12.6360677,5.47732205 12.4696181,4.64930556 12.1395399,3.87065972 L12.1395399,3.87065972 Z M6.31944444,11.5047743 C3.46582031,11.5047743 1.14398872,9.18294271 1.14398872,6.32931858 C1.14398872,3.47569444 3.46582031,1.15386285 6.31944444,1.15386285 C9.17306858,1.15386285 11.4949002,3.47569444 11.4949002,6.32931858 C11.4949002,9.18294271 9.17447917,11.5047743 6.31944444,11.5047743 Z\"\n            ></path>\n            <path\n                d=\"M6.77083333,3.37695313 C6.71299913,3.31065538 6.64388021,3.26128472 6.56770833,3.22743056 C6.56629774,3.22743056 6.56488715,3.22601997 6.56347656,3.22601997 L6.54231771,3.21755642 C6.53949653,3.21614583 6.53667535,3.21473524 6.53385417,3.21473524 C6.52821181,3.21191406 6.52256944,3.21050347 6.51692708,3.20909288 C6.51269531,3.20768229 6.50846354,3.2062717 6.50564236,3.20486111 C6.50141059,3.20345052 6.49576823,3.20203993 6.49153646,3.20062934 C6.48730469,3.19921875 6.48166233,3.19780816 6.47743056,3.19639757 C6.47319878,3.19498698 6.46896701,3.19357639 6.46473524,3.19357639 C6.45909288,3.1921658 6.45345052,3.19075521 6.44921875,3.18934462 C6.44498698,3.18793403 6.44075521,3.18793403 6.43793403,3.18652344 C6.43229167,3.18511285 6.42664931,3.18370226 6.42100694,3.18370226 C6.41677517,3.18370226 6.41395399,3.18229167 6.40972222,3.18229167 C6.40407986,3.18088108 6.3984375,3.18088108 6.39279514,3.17947049 C6.38856337,3.17947049 6.3843316,3.1780599 6.38151042,3.1780599 C6.37586806,3.1780599 6.37022569,3.17664931 6.36458333,3.17664931 C6.36035156,3.17664931 6.35611979,3.17664931 6.35188802,3.17523872 L6.29264323,3.17523872 C6.28841146,3.17523872 6.28417969,3.17523872 6.27994792,3.17664931 C6.27430556,3.17664931 6.26866319,3.1780599 6.26302083,3.1780599 C6.25878906,3.1780599 6.25455729,3.17947049 6.25173611,3.17947049 C6.24609375,3.17947049 6.24045139,3.18088108 6.23480903,3.18229167 C6.23057726,3.18229167 6.22775608,3.18370226 6.22352431,3.18370226 C6.21788194,3.18511285 6.21223958,3.18511285 6.20659722,3.18652344 C6.20236545,3.18793403 6.19813368,3.18793403 6.1953125,3.18934462 C6.18967014,3.19075521 6.18402778,3.1921658 6.17979601,3.19357639 C6.17556424,3.19498698 6.17133247,3.19498698 6.16710069,3.19639757 C6.16286892,3.19780816 6.15722656,3.19921875 6.15299479,3.20062934 C6.14876302,3.20203993 6.14312066,3.20345052 6.13888889,3.20486111 C6.13465712,3.2062717 6.13042535,3.20768229 6.12760417,3.20909288 C6.12196181,3.21050347 6.11631944,3.21332465 6.11067708,3.21473524 C6.1078559,3.21614583 6.10503472,3.21755642 6.10221354,3.21755642 L6.08105469,3.22601997 C6.0796441,3.22601997 6.07823351,3.22743056 6.07682292,3.22743056 C6.00206163,3.26128472 5.93153212,3.31065538 5.87369792,3.37695313 L4.1344401,5.34331597 C3.90874566,5.59157986 3.93272569,5.97526042 4.18098958,6.19390191 C4.42925347,6.41395399 4.81152344,6.38997396 5.03157552,6.14171007 L5.72558594,5.35601128 L5.72558594,8.3422309 C5.72558594,8.36056858 5.72699653,8.38031684 5.72840712,8.39865451 C5.72699653,8.41840278 5.72558594,8.43956163 5.72558594,8.46072049 L5.72558594,8.88812934 C5.72558594,9.21538628 5.99359809,9.48339844 6.32085503,9.48339844 C6.64811198,9.48339844 6.91612413,9.21538628 6.91612413,8.88812934 L6.91612413,8.46072049 C6.91612413,8.43815104 6.91471354,8.41699219 6.91189236,8.39442274 C6.91330295,8.37749566 6.91471354,8.36056858 6.91471354,8.3422309 L6.91471354,5.35742188 L7.60872396,6.14171007 C7.82877604,6.38997396 8.21104601,6.41395399 8.4593099,6.19390191 C8.70757378,5.97384983 8.73155382,5.59157986 8.51150174,5.34331597 L6.77083333,3.37695313 Z\"\n            ></path>\n        </g>\n    </g>\n</g>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "ZINDEX_DOWN_SVG",
+          "default": "html`<svg\nwidth=\"13px\"\nheight=\"13px\"\nviewBox=\"0 0 13 13\"\nversion=\"1.1\"\nxmlns=\"http://www.w3.org/2000/svg\"\nxmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n<title>下一层</title>\n<desc>下一层</desc>\n<g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n    <g\n        transform=\"translate(-170.000000, -734.000000)\"\n        fill=\"#1B1D1F\"\n        fill-rule=\"nonzero\"\n    >\n        <g\n            transform=\"translate(176.500000, 740.500000) scale(-1, -1) translate(-176.500000, -740.500000) translate(170.000000, 734.000000)\"\n        >\n            <path\n                d=\"M12.1395399,3.87065972 C11.8207465,3.1188151 11.3665365,2.44314236 10.7853733,1.86338976 C10.2056207,1.28363715 9.52994792,0.828016493 8.7781033,0.50922309 C7.99945747,0.180555556 7.17285156,0.0126953125 6.31944444,0.0126953125 C5.46603733,0.0126953125 4.63943142,0.180555556 3.86078559,0.50922309 C3.10894097,0.828016493 2.43326823,1.28222656 1.85351563,1.86338976 C1.27376302,2.44314236 0.818142361,3.1188151 0.499348958,3.87065972 C0.169270833,4.64930556 0.00282118056,5.47732205 0.00282118056,6.32931858 C0.00282118056,7.1813151 0.169270833,8.0093316 0.499348958,8.78797743 C0.818142361,9.53982205 1.27235243,10.2154948 1.85351563,10.7952474 C2.43326823,11.375 3.10894097,11.8306207 3.86078559,12.1494141 C4.63943142,12.4794922 5.46744792,12.6459418 6.31944444,12.6459418 C7.17144097,12.6459418 7.99945747,12.4794922 8.7781033,12.1494141 C9.52994792,11.8306207 10.2056207,11.3764106 10.7853733,10.7952474 C11.3651259,10.2154948 11.8207465,9.53982205 12.1395399,8.78797743 C12.4696181,8.0093316 12.6360677,7.1813151 12.6360677,6.32931858 C12.6360677,5.47732205 12.4696181,4.64930556 12.1395399,3.87065972 L12.1395399,3.87065972 Z M6.31944444,11.5047743 C3.46582031,11.5047743 1.14398872,9.18294271 1.14398872,6.32931858 C1.14398872,3.47569444 3.46582031,1.15386285 6.31944444,1.15386285 C9.17306858,1.15386285 11.4949002,3.47569444 11.4949002,6.32931858 C11.4949002,9.18294271 9.17447917,11.5047743 6.31944444,11.5047743 Z\"\n                id=\"Shape\"\n            ></path>\n            <path\n                d=\"M6.77083333,3.37695313 C6.71299913,3.31065538 6.64388021,3.26128472 6.56770833,3.22743056 C6.56629774,3.22743056 6.56488715,3.22601997 6.56347656,3.22601997 L6.54231771,3.21755642 C6.53949653,3.21614583 6.53667535,3.21473524 6.53385417,3.21473524 C6.52821181,3.21191406 6.52256944,3.21050347 6.51692708,3.20909288 C6.51269531,3.20768229 6.50846354,3.2062717 6.50564236,3.20486111 C6.50141059,3.20345052 6.49576823,3.20203993 6.49153646,3.20062934 C6.48730469,3.19921875 6.48166233,3.19780816 6.47743056,3.19639757 C6.47319878,3.19498698 6.46896701,3.19357639 6.46473524,3.19357639 C6.45909288,3.1921658 6.45345052,3.19075521 6.44921875,3.18934462 C6.44498698,3.18793403 6.44075521,3.18793403 6.43793403,3.18652344 C6.43229167,3.18511285 6.42664931,3.18370226 6.42100694,3.18370226 C6.41677517,3.18370226 6.41395399,3.18229167 6.40972222,3.18229167 C6.40407986,3.18088108 6.3984375,3.18088108 6.39279514,3.17947049 C6.38856337,3.17947049 6.3843316,3.1780599 6.38151042,3.1780599 C6.37586806,3.1780599 6.37022569,3.17664931 6.36458333,3.17664931 C6.36035156,3.17664931 6.35611979,3.17664931 6.35188802,3.17523872 L6.29264323,3.17523872 C6.28841146,3.17523872 6.28417969,3.17523872 6.27994792,3.17664931 C6.27430556,3.17664931 6.26866319,3.1780599 6.26302083,3.1780599 C6.25878906,3.1780599 6.25455729,3.17947049 6.25173611,3.17947049 C6.24609375,3.17947049 6.24045139,3.18088108 6.23480903,3.18229167 C6.23057726,3.18229167 6.22775608,3.18370226 6.22352431,3.18370226 C6.21788194,3.18511285 6.21223958,3.18511285 6.20659722,3.18652344 C6.20236545,3.18793403 6.19813368,3.18793403 6.1953125,3.18934462 C6.18967014,3.19075521 6.18402778,3.1921658 6.17979601,3.19357639 C6.17556424,3.19498698 6.17133247,3.19498698 6.16710069,3.19639757 C6.16286892,3.19780816 6.15722656,3.19921875 6.15299479,3.20062934 C6.14876302,3.20203993 6.14312066,3.20345052 6.13888889,3.20486111 C6.13465712,3.2062717 6.13042535,3.20768229 6.12760417,3.20909288 C6.12196181,3.21050347 6.11631944,3.21332465 6.11067708,3.21473524 C6.1078559,3.21614583 6.10503472,3.21755642 6.10221354,3.21755642 L6.08105469,3.22601997 C6.0796441,3.22601997 6.07823351,3.22743056 6.07682292,3.22743056 C6.00206163,3.26128472 5.93153212,3.31065538 5.87369792,3.37695313 L4.1344401,5.34331597 C3.90874566,5.59157986 3.93272569,5.97526042 4.18098958,6.19390191 C4.42925347,6.41395399 4.81152344,6.38997396 5.03157552,6.14171007 L5.72558594,5.35601128 L5.72558594,8.3422309 C5.72558594,8.36056858 5.72699653,8.38031684 5.72840712,8.39865451 C5.72699653,8.41840278 5.72558594,8.43956163 5.72558594,8.46072049 L5.72558594,8.88812934 C5.72558594,9.21538628 5.99359809,9.48339844 6.32085503,9.48339844 C6.64811198,9.48339844 6.91612413,9.21538628 6.91612413,8.88812934 L6.91612413,8.46072049 C6.91612413,8.43815104 6.91471354,8.41699219 6.91189236,8.39442274 C6.91330295,8.37749566 6.91471354,8.36056858 6.91471354,8.3422309 L6.91471354,5.35742188 L7.60872396,6.14171007 C7.82877604,6.38997396 8.21104601,6.41395399 8.4593099,6.19390191 C8.70757378,5.97384983 8.73155382,5.59157986 8.51150174,5.34331597 L6.77083333,3.37695313 Z\"\n                id=\"Path\"\n            ></path>\n        </g>\n    </g>\n</g>\n</svg>`"
+        },
+        {
+          "kind": "variable",
+          "name": "DELETE_LAYOUT_SVG",
+          "default": "html`<svg\nwidth=\"13px\"\nheight=\"13px\"\nviewBox=\"0 0 13 13\"\nversion=\"1.1\"\nxmlns=\"http://www.w3.org/2000/svg\"\nxmlns:xlink=\"http://www.w3.org/1999/xlink\"\n>\n<title>复制</title>\n<g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n    <g\n        transform=\"translate(-170.000000, -769.000000)\"\n        fill=\"#1B1D1F\"\n        fill-rule=\"nonzero\"\n    >\n        <g transform=\"translate(170.000000, 769.000000)\">\n            <path\n                d=\"M8.67605331,2.78989931 L0.870564777,2.78989931 C0.393323115,2.78989931 0.00807985547,3.15107167 0.00807985547,3.59849417 L0.00807985547,11.5146378 C0.00807985547,11.9620603 0.393323115,12.3232326 0.870564777,12.3232326 L8.67892827,12.3232326 C9.15616993,12.3232326 9.54141319,11.9620603 9.54141319,11.5146378 L9.54141319,3.59849417 C9.53982912,3.15148392 9.15285788,2.78989931 8.67605331,2.78989931 Z M8.36524512,11.149766 L1.13474652,11.149766 L1.13474652,3.91656598 L8.36812005,3.91656598 L8.36812005,11.149766 L8.36524512,11.149766 Z\"\n            ></path>\n            <path\n                d=\"M10.8327465,0.0078993112 L3.16852431,0.0078993112 C2.85074654,0.0078993112 2.59074652,0.267899311 2.59074652,0.585677083 C2.59074652,0.903454855 2.85074652,1.16345486 3.16852431,1.16345486 L10.8327465,1.16345486 C11.0436354,1.16345486 11.2140799,1.33389929 11.2140799,1.54478819 L11.2140799,10.1652326 C11.2140799,10.4830104 11.4740799,10.7430104 11.7918576,10.7430104 C12.1096354,10.7430104 12.3696354,10.4830104 12.3696354,10.1652326 L12.3696354,1.54478819 C12.3667465,0.695454855 11.679191,0.0078993112 10.8327465,0.0078993112 Z\"\n            ></path>\n        </g>\n    </g>\n</g>\n</svg>`"
         }
       ],
       "exports": [
@@ -1108,6 +1165,94 @@
           "name": "TITLE_SVG",
           "declaration": {
             "name": "TITLE_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DELETE_SVG",
+          "declaration": {
+            "name": "DELETE_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ADD_SVG",
+          "declaration": {
+            "name": "ADD_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "BACK_LAYOUT",
+          "declaration": {
+            "name": "BACK_LAYOUT",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FORWARD_LAYOUT",
+          "declaration": {
+            "name": "FORWARD_LAYOUT",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "SAVE_LAYOUT",
+          "declaration": {
+            "name": "SAVE_LAYOUT",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CLOSE_LAYOUT",
+          "declaration": {
+            "name": "CLOSE_LAYOUT",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "EDIT_SVG",
+          "declaration": {
+            "name": "EDIT_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "STYLE_SVG",
+          "declaration": {
+            "name": "STYLE_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ZINDEX_UP_SVG",
+          "declaration": {
+            "name": "ZINDEX_UP_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ZINDEX_DOWN_SVG",
+          "declaration": {
+            "name": "ZINDEX_DOWN_SVG",
+            "module": "src/icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DELETE_LAYOUT_SVG",
+          "declaration": {
+            "name": "DELETE_LAYOUT_SVG",
             "module": "src/icon.ts"
           }
         }
