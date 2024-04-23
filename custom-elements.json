@@ -68,7 +68,7 @@
                 "text": "GridItemStyleType"
               },
               "privacy": "private",
-              "default": "{\n        borderRadius: 3,\n        borderColor: '#c3c3c3',\n        borderWidth: 1,\n        borderStyle: 'solid',\n        titleColor: '',\n        contentColor: '',\n        disableScrollBars: false\n    }",
+              "default": "{\n    borderRadius: 3,\n    borderColor: \"#c3c3c3\",\n    borderWidth: 1,\n    borderStyle: \"solid\",\n    titleColor: \"\",\n    contentColor: \"\",\n    disableScrollBars: false,\n  }",
               "description": "拖拽布局默认样式"
             },
             {
@@ -84,7 +84,7 @@
               "type": {
                 "text": "object"
               },
-              "default": "{\n        t: (k: string, b: boolean) => k,\n        tt: (k: string, b: boolean) => k,\n        locale: 'zh-cn'\n    }"
+              "default": "{\n    t: (k: string, b: boolean) => k,\n    tt: (k: string, b: boolean) => k,\n    locale: \"zh-cn\",\n  }"
             },
             {
               "kind": "field",
@@ -193,7 +193,7 @@
               "type": {
                 "text": "string"
               },
-              "default": "''"
+              "default": "\"\""
             },
             {
               "kind": "field",
@@ -344,7 +344,7 @@
             {
               "kind": "field",
               "name": "findGridItemData",
-              "default": "(id: any): GridItemData | undefined => {\n        return this.layoutData.find((item: GridItemData) => item.id === id)\n    }",
+              "default": "(id: any): GridItemData | undefined => {\n    return this.layoutData.find((item: GridItemData) => item.id === id);\n  }",
               "description": "查找GridItem",
               "parameters": [
                 {
@@ -447,13 +447,13 @@
             {
               "kind": "field",
               "name": "findBigestOverlapItem",
-              "default": "(\n        dataList: GridItemData[],\n        x: number,\n        y: number,\n        w: number, //每个网格宽度所占的像素值\n        h: number, //每个网格高度所占的像素值\n        exceptIds: any[],\n        exceptFloatItem: boolean = true\n    ): GridItemData | undefined => {\n        const list = this.findOverlapItem(dataList, x, y, w, h, exceptIds, 0, exceptFloatItem)\n        let BigestOverlapArea = -99999999999 //最大的重叠交叉面积\n        let BigestOverlapItem: any = undefined\n        list.forEach((item: any) => {\n            const curItemX = item.x\n            const curItemY = item.y\n            const curItemW = item.w\n            const curItemH = item.h\n            const overX1 = Math.max(x, curItemX)\n            const overX2 = Math.min(x + w, curItemX + curItemW)\n            const overW = overX2 - overX1\n            const overY1 = Math.max(y, curItemY)\n            const overY2 = Math.min(y + h, curItemY + curItemH)\n            const overH = overY2 - overY1\n            const overArea = overH * overW\n            if (overArea > BigestOverlapArea) {\n                BigestOverlapArea = overArea\n                BigestOverlapItem = item\n            }\n        })\n\n        return BigestOverlapItem\n    }",
+              "default": "(\n    dataList: GridItemData[],\n    x: number,\n    y: number,\n    w: number, //每个网格宽度所占的像素值\n    h: number, //每个网格高度所占的像素值\n    exceptIds: any[],\n    exceptFloatItem: boolean = true\n  ): GridItemData | undefined => {\n    const list = this.findOverlapItem(\n      dataList,\n      x,\n      y,\n      w,\n      h,\n      exceptIds,\n      0,\n      exceptFloatItem\n    );\n    let BigestOverlapArea = -99999999999; //最大的重叠交叉面积\n    let BigestOverlapItem: any = undefined;\n    list.forEach((item: any) => {\n      const curItemX = item.x;\n      const curItemY = item.y;\n      const curItemW = item.w;\n      const curItemH = item.h;\n      const overX1 = Math.max(x, curItemX);\n      const overX2 = Math.min(x + w, curItemX + curItemW);\n      const overW = overX2 - overX1;\n      const overY1 = Math.max(y, curItemY);\n      const overY2 = Math.min(y + h, curItemY + curItemH);\n      const overH = overY2 - overY1;\n      const overArea = overH * overW;\n      if (overArea > BigestOverlapArea) {\n        BigestOverlapArea = overArea;\n        BigestOverlapItem = item;\n      }\n    });\n\n    return BigestOverlapItem;\n  }",
               "description": "查找存在的最大的重叠交叉项"
             },
             {
               "kind": "field",
               "name": "findOverlapItem",
-              "default": "(\n        dataList: GridItemData[],\n        x: number,\n        y: number,\n        w: number,\n        h: number,\n        exceptIds: any[],\n        overCount: number = 0,\n        exceptFloatItem: boolean = true\n    ): GridItemData[] => {\n        const list: GridItemData[] = []\n        let data = [...dataList]\n        if (exceptFloatItem) data = data.filter((item: any) => !item.float)\n        if (this.curActiveGridItem && this.dragData) {\n            // 如果有正在拖动的 那么 将正在拖动的项目添加到列表中\n            if (!data.find(item => item.id === this.dragData.id)) {\n                data = [...data, this.dragData]\n            }\n        }\n        for (let i = 0; i < data.length; i++) {\n            const item = data[i]\n            // 如果当前项目正在排出列表中 直接跳过循环\n            if (exceptIds && exceptIds.indexOf(item.id) >= 0) {\n                continue\n            }\n            // 当前项目的位置 大小 信息\n            const curItemX = item.x\n            const curItemY = item.y\n            const curItemW = item.w\n            const curItemH = item.h\n            // 对比项目(传入的) 与当前项目 对比 取出较小的\n            const x1 = Math.min(curItemX, x)\n            // 对比项目(传入的) 与当前项目 对比 取出较大的\n            const x2 = Math.max(curItemX + curItemW, x + w)\n\n            const y1 = Math.min(curItemY, y)\n            const y2 = Math.max(curItemY + curItemH, y + h)\n\n            //是否存在交叉的算法\n            // 假如两个项目重叠  那么 第一个项目的最左侧 + 第二个项目的最右侧 的 宽度 一定小于 两个 项目的宽度和\n            // 高度同上\n            if (\n                x2 - x1 - (curItemW + w) + overCount < this.gridMargin &&\n                y2 - y1 - (curItemH + h) + overCount < this.gridMargin\n            ) {\n                list.push(item)\n            }\n        }\n        return list\n    }",
+              "default": "(\n    dataList: GridItemData[],\n    x: number,\n    y: number,\n    w: number,\n    h: number,\n    exceptIds: any[],\n    overCount: number = 0,\n    exceptFloatItem: boolean = true\n  ): GridItemData[] => {\n    const list: GridItemData[] = [];\n    let data = [...dataList];\n    if (exceptFloatItem) data = data.filter((item: any) => !item.float);\n    if (this.curActiveGridItem && this.dragData) {\n      // 如果有正在拖动的 那么 将正在拖动的项目添加到列表中\n      if (!data.find((item) => item.id === this.dragData.id)) {\n        data = [...data, this.dragData];\n      }\n    }\n    for (let i = 0; i < data.length; i++) {\n      const item = data[i];\n      // 如果当前项目正在排出列表中 直接跳过循环\n      if (exceptIds && exceptIds.indexOf(item.id) >= 0) {\n        continue;\n      }\n      // 当前项目的位置 大小 信息\n      const curItemX = item.x;\n      const curItemY = item.y;\n      const curItemW = item.w;\n      const curItemH = item.h;\n      // 对比项目(传入的) 与当前项目 对比 取出较小的\n      const x1 = Math.min(curItemX, x);\n      // 对比项目(传入的) 与当前项目 对比 取出较大的\n      const x2 = Math.max(curItemX + curItemW, x + w);\n\n      const y1 = Math.min(curItemY, y);\n      const y2 = Math.max(curItemY + curItemH, y + h);\n\n      //是否存在交叉的算法\n      // 假如两个项目重叠  那么 第一个项目的最左侧 + 第二个项目的最右侧 的 宽度 一定小于 两个 项目的宽度和\n      // 高度同上\n      if (\n        x2 - x1 - (curItemW + w) + overCount < this.gridMargin &&\n        y2 - y1 - (curItemH + h) + overCount < this.gridMargin\n      ) {\n        list.push(item);\n      }\n    }\n    return list;\n  }",
               "description": "获取交叉的GridItem 列表",
               "parameters": [
                 {
@@ -663,7 +663,7 @@
             {
               "kind": "field",
               "name": "calcNearPosition",
-              "default": "(left: number, top: number): GridPosition => {\n        const x = Math.round(left / this.griddingWidth)\n        const y = Math.round(top / this.griddingHeight)\n        return { x, y }\n    }",
+              "default": "(left: number, top: number): GridPosition => {\n    const x = Math.round(left / this.griddingWidth);\n    const y = Math.round(top / this.griddingHeight);\n    return { x, y };\n  }",
               "description": "转换成的GidPosition",
               "parameters": [
                 {
@@ -703,7 +703,7 @@
             {
               "kind": "field",
               "name": "getBackLayout",
-              "default": "() => {\n        this.dataStoreIndex--\n        return this.dataStore[this.dataStoreIndex]\n    }",
+              "default": "() => {\n    this.dataStoreIndex--;\n    return this.dataStore[this.dataStoreIndex];\n  }",
               "description": "无用代码\n返回 上次的layout",
               "return": {
                 "type": {
@@ -714,37 +714,37 @@
             {
               "kind": "field",
               "name": "backLayout",
-              "default": "() => {\n        const data = this.getBackLayout()\n        if (data) {\n            this.layoutData = JSON.parse(data)\n        }\n    }",
+              "default": "() => {\n    const data = this.getBackLayout();\n    if (data) {\n      this.layoutData = JSON.parse(data);\n    }\n  }",
               "description": "// 无用代码\n打开上次的保存layout"
             },
             {
               "kind": "field",
               "name": "getForwardLayout",
-              "default": "() => {\n        this.dataStoreIndex =\n            this.dataStore.length - 1 > this.dataStoreIndex\n                ? this.dataStoreIndex + 1\n                : this.dataStore.length - 1\n        return this.dataStore[this.dataStoreIndex]\n    }",
+              "default": "() => {\n    this.dataStoreIndex =\n      this.dataStore.length - 1 > this.dataStoreIndex\n        ? this.dataStoreIndex + 1\n        : this.dataStore.length - 1;\n    return this.dataStore[this.dataStoreIndex];\n  }",
               "description": "调试代码 无用 下一个layout"
             },
             {
               "kind": "field",
               "name": "forwardLayout",
-              "default": "() => {\n        const data = this.getForwardLayout()\n        if (data) {\n            this.layoutData = JSON.parse(data)\n        }\n    }",
+              "default": "() => {\n    const data = this.getForwardLayout();\n    if (data) {\n      this.layoutData = JSON.parse(data);\n    }\n  }",
               "description": "调试代码 无用\n打开下一步的layout"
             },
             {
               "kind": "field",
               "name": "close",
-              "default": "() => {\n        const emit: any = new Event('close')\n        emit.detail = this.layoutData\n        this.dispatchEvent(emit)\n    }",
+              "default": "() => {\n    const emit: any = new Event(\"close\");\n    emit.detail = this.layoutData;\n    this.dispatchEvent(emit);\n  }",
               "description": "调试代码, 无用\n关闭事件"
             },
             {
               "kind": "field",
               "name": "save",
-              "default": "() => {\n        const emit: any = new Event('save')\n        emit.detail = this.layoutData\n        this.dispatchEvent(emit)\n    }",
+              "default": "() => {\n    const emit: any = new Event(\"save\");\n    emit.detail = this.layoutData;\n    this.dispatchEvent(emit);\n  }",
               "description": "测试代码 无用"
             },
             {
               "kind": "field",
               "name": "gridItemCopyBySubMenu",
-              "default": "() => {\n        if (!this.curGridItemSubMenuGridData) return\n        const emit: any = new Event('gridItemCopy')\n        emit.detail = this.curGridItemSubMenuGridData\n        this.closeGridItemSubMenu()\n        this.reRender()\n        this.dispatchEvent(emit)\n    }",
+              "default": "() => {\n    if (!this.curGridItemSubMenuGridData) return;\n    const emit: any = new Event(\"gridItemCopy\");\n    emit.detail = this.curGridItemSubMenuGridData;\n    this.closeGridItemSubMenu();\n    this.reRender();\n    this.dispatchEvent(emit);\n  }",
               "description": "复杂",
               "return": {
                 "type": {
@@ -946,7 +946,7 @@
               "kind": "field",
               "name": "curGridItemSubMenuGridDataActiveStyle",
               "type": {
-                "text": "ActiveGridItemStyleType | undefined"
+                "text": "| ActiveGridItemStyleType\n    | undefined"
               },
               "description": "选中的UserStyle;"
             },

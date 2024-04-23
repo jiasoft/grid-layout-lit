@@ -1,5 +1,5 @@
-import { LitElement } from 'lit';
-import { GridItemStyleType, ActiveGridItemStyleType, GridItemData, ItemData } from './types';
+import { LitElement } from "lit";
+import { GridItemStyleType, ActiveGridItemStyleType, GridItemData, ItemData } from "./types.js";
 type HtmlPosition = {
     left: number;
     top: number;

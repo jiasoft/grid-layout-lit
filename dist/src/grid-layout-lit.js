@@ -1,23 +1,23 @@
 import { __decorate } from "tslib";
-import { html, css, LitElement } from 'lit';
-import { property, state, customElement } from 'lit/decorators.js';
-import { GridItemReizeName } from './types';
-import { MORE_SVG, TITLE_SVG, DELETE_SVG, ADD_SVG, BACK_LAYOUT, FORWARD_LAYOUT, SAVE_LAYOUT, CLOSE_LAYOUT, EDIT_SVG, STYLE_SVG, ZINDEX_UP_SVG, ZINDEX_DOWN_SVG, DELETE_LAYOUT_SVG } from './icon';
+import { html, css, LitElement } from "lit";
+import { property, state, customElement } from "lit/decorators.js";
+import { GridItemReizeName, } from "./types.js";
+import { MORE_SVG, TITLE_SVG, DELETE_SVG, ADD_SVG, BACK_LAYOUT, FORWARD_LAYOUT, SAVE_LAYOUT, CLOSE_LAYOUT, EDIT_SVG, STYLE_SVG, ZINDEX_UP_SVG, ZINDEX_DOWN_SVG, DELETE_LAYOUT_SVG, } from "./icon.js";
 // import { generateRandomUID } from '../../lib/api'
 const generateRandomUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-        const r = (Math.random() * 16) | 0, v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0, v = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
     });
 };
-const DRAG_ID = '100000';
+const DRAG_ID = "100000";
 let GridLayoutLit = class GridLayoutLit extends LitElement {
     get layoutDefaultGridStyle() {
         return this.$layoutDefaultGridStyle;
     }
     set layoutDefaultGridStyle(val) {
         this.$layoutDefaultGridStyle = val || this.$layoutDefaultGridStyle;
-        this.style.overflowY = this.isDisableScrollBars ? 'hidden' : 'auto';
+        this.style.overflowY = this.isDisableScrollBars ? "hidden" : "auto";
     }
     /**
      * 是否显示滚动条
@@ -47,7 +47,9 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         //满屏算法  计算没有滚动条的时候 计算出每个网格的高度
         if (!this.edit && ((_a = this.layoutDefaultGridStyle) === null || _a === void 0 ? void 0 : _a.disableScrollBars)) {
             const _griddingHeight = this.stageHeight / this.calcStageVirtualHeight;
-            return _griddingHeight < this.griddingWidth ? _griddingHeight : this.griddingWidth;
+            return _griddingHeight < this.griddingWidth
+                ? _griddingHeight
+                : this.griddingWidth;
         }
         return this.griddingWidth;
     }
@@ -55,7 +57,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      * 选中的GridItem
      */
     get selectedGridItem() {
-        return this.layoutData.find(item => item.selected);
+        return this.layoutData.find((item) => item.selected);
     }
     /**
      * 重新渲染
@@ -69,10 +71,10 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      */
     drawDragDataHtml() {
         return html `<div
-            class="grid-item drag"
-            drag="${true}"
-            style="${this.getGridItemStyle(this.dragData)}"
-        ></div>`;
+      class="grid-item drag"
+      drag="${true}"
+      style="${this.getGridItemStyle(this.dragData)}"
+    ></div>`;
     }
     constructor() {
         super();
@@ -97,17 +99,17 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
          */
         this.$layoutDefaultGridStyle = {
             borderRadius: 3,
-            borderColor: '#c3c3c3',
+            borderColor: "#c3c3c3",
             borderWidth: 1,
-            borderStyle: 'solid',
-            titleColor: '',
-            contentColor: '',
-            disableScrollBars: false
+            borderStyle: "solid",
+            titleColor: "",
+            contentColor: "",
+            disableScrollBars: false,
         };
         this.i18n = {
             t: (k, b) => k,
             tt: (k, b) => k,
-            locale: 'zh-cn'
+            locale: "zh-cn",
         };
         /**
          * 拖拽布局总体宽度 像素
@@ -147,7 +149,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.dragData = { x: 0, y: 0, w: 60, h: 60, z: 0, id: DRAG_ID };
         this.draggIng = false;
         this.floatStep = 1;
-        this.lightningId = '';
+        this.lightningId = "";
         /** resize相关 */
         /**
          * 移动初始位置
@@ -236,7 +238,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
                 data = data.filter((item) => !item.float);
             if (this.curActiveGridItem && this.dragData) {
                 // 如果有正在拖动的 那么 将正在拖动的项目添加到列表中
-                if (!data.find(item => item.id === this.dragData.id)) {
+                if (!data.find((item) => item.id === this.dragData.id)) {
                     data = [...data, this.dragData];
                 }
             }
@@ -323,7 +325,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
          * 关闭事件
          */
         this.close = () => {
-            const emit = new Event('close');
+            const emit = new Event("close");
             emit.detail = this.layoutData;
             this.dispatchEvent(emit);
         };
@@ -331,7 +333,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
          * 测试代码 无用
          */
         this.save = () => {
-            const emit = new Event('save');
+            const emit = new Event("save");
             emit.detail = this.layoutData;
             this.dispatchEvent(emit);
         };
@@ -342,7 +344,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.gridItemCopyBySubMenu = () => {
             if (!this.curGridItemSubMenuGridData)
                 return;
-            const emit = new Event('gridItemCopy');
+            const emit = new Event("gridItemCopy");
             emit.detail = this.curGridItemSubMenuGridData;
             this.closeGridItemSubMenu();
             this.reRender();
@@ -366,7 +368,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         const h = this.defaultGridItemHeight;
         const { x, y } = this.getEmptyBound(w, h, false);
         const tid = generateRandomUID();
-        const floatCount = this.layoutData.filter(item => item.float).length;
+        const floatCount = this.layoutData.filter((item) => item.float).length;
         const item = {
             x,
             y,
@@ -374,8 +376,8 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             h,
             z: floatCount,
             id: tid,
-            slot: 'slot_' + tid,
-            title: tid
+            slot: "slot_" + tid,
+            title: tid,
         };
         if (this.isDisableScrollBars) {
             const maxHeight = this.getBoundingClientRect().height;
@@ -404,7 +406,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.reRender();
         this.focusGridItem(grid);
         setTimeout(() => {
-            this.lightningId = '';
+            this.lightningId = "";
             this.reRender();
         }, 500);
     }
@@ -414,13 +416,13 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      */
     focusGridItem(grid) {
         setTimeout(async () => {
-            const index = this.layoutData.findIndex(item => item.id === grid.id);
+            const index = this.layoutData.findIndex((item) => item.id === grid.id);
             const element = await this.getGridItemElement(index);
             if (!element)
                 return;
-            const input = document.createElement('input');
-            input.style.position = 'absolute';
-            input.style.opacity = '0.01';
+            const input = document.createElement("input");
+            input.style.position = "absolute";
+            input.style.opacity = "0.01";
             element.appendChild(input);
             input.focus();
             setTimeout(() => {
@@ -434,7 +436,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      * @returns
      */
     getGridItemElement(index) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             let length = 20;
             const loopfindGridItem = () => {
                 var _a;
@@ -502,9 +504,9 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // 重新渲染
         this.reRender();
         // 设置dom 今只文字选中
-        document.body.setAttribute('onselectstart', 'return false');
+        document.body.setAttribute("onselectstart", "return false");
         // 设置鼠标为 resize 状态
-        document.body.style.cursor = 'se-resize';
+        document.body.style.cursor = "se-resize";
         // 鼠标移动方法
         const mouseMove = (event) => {
             // 鼠标移动的时候方块大小改变
@@ -519,18 +521,18 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // 释放鼠标左键触发的方法
         const mouseup = () => {
             // 移除选中文字的属性
-            document.body.removeAttribute('onselectstart');
+            document.body.removeAttribute("onselectstart");
             // 去除鼠标箭头样式
-            document.body.style.cursor = '';
+            document.body.style.cursor = "";
             // 结束网格 resize 状态
             this.gridItemResizeEnd();
-            window.removeEventListener('mousemove', mouseMove);
-            window.removeEventListener('mouseup', mouseup);
+            window.removeEventListener("mousemove", mouseMove);
+            window.removeEventListener("mouseup", mouseup);
         };
         // 鼠标移动方法
-        window.addEventListener('mousemove', mouseMove);
+        window.addEventListener("mousemove", mouseMove);
         // 鼠标松开
-        window.addEventListener('mouseup', mouseup);
+        window.addEventListener("mouseup", mouseup);
     }
     /**
      * resizeing  中的方法
@@ -554,9 +556,11 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
          * 移动过程中 新增/减少 的网格数 = (移动后鼠标的位置像素值 - 移动前鼠标的位置像素值) / 每个网格所占的像素值
          */
         let w = ((_a = this.resizeFixGridItemData) === null || _a === void 0 ? void 0 : _a.w) +
-            Math.round((this.resizeingPosition.left - this.resizeFixPosition.left) / this.griddingWidth);
+            Math.round((this.resizeingPosition.left - this.resizeFixPosition.left) /
+                this.griddingWidth);
         let h = ((_b = this.resizeFixGridItemData) === null || _b === void 0 ? void 0 : _b.h) +
-            Math.round((this.resizeingPosition.top - this.resizeFixPosition.top) / this.griddingHeight);
+            Math.round((this.resizeingPosition.top - this.resizeFixPosition.top) /
+                this.griddingHeight);
         // 容器最左端 到该网格左上角的位置横向网格数
         const x = (_c = this.resizeFixGridItemData) === null || _c === void 0 ? void 0 : _c.x;
         // 容器的最上端 到该网格左上角的位置纵向网格数
@@ -578,21 +582,26 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             width,
             height,
             left: x * this.griddingWidth,
-            top: y * this.griddingHeight
+            top: y * this.griddingHeight,
         };
         // resize 完成 之后
         /** 不允许超出stageWidth */
         w =
-            w * this.griddingWidth <= this.stageWidth - (x + this.gridMargin) * this.griddingWidth
+            w * this.griddingWidth <=
+                this.stageWidth - (x + this.gridMargin) * this.griddingWidth
                 ? w
-                : Math.floor(this.stageWidth / this.griddingWidth) - x - this.gridMargin;
+                : Math.floor(this.stageWidth / this.griddingWidth) -
+                    x -
+                    this.gridMargin;
         if (this.isDisableScrollBars) {
             /** 不允许超出stageHeight */
             h =
                 h * this.griddingHeight <=
                     this.stageHeight - (y + this.gridMargin) * this.griddingHeight
                     ? h
-                    : Math.floor(this.stageHeight / this.griddingHeight) - x - this.gridMargin;
+                    : Math.floor(this.stageHeight / this.griddingHeight) -
+                        x -
+                        this.gridMargin;
         }
         // 最小 的 高度和宽度只能拖到 8 和 4
         w = w < 8 ? 8 : w;
@@ -616,7 +625,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // 向外发送resize 事件 60s 防抖
         this.handDispatchGridItemResizeEvent = setTimeout(() => {
             const resize = new CustomEvent(GridItemReizeName, {
-                detail: data
+                detail: data,
             });
             window.dispatchEvent(resize);
         }, 60);
@@ -661,12 +670,12 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             const attr = [];
             attr.push(`border-style:${data.activeStyle.borderStyle};`);
             attr.push(`border-width:${data.activeStyle.borderWidth || 0}px;`);
-            attr.push(`border-color:${data.activeStyle.borderColor || 'transparent'};`);
+            attr.push(`border-color:${data.activeStyle.borderColor || "transparent"};`);
             attr.push(`border-radius:${data.activeStyle.borderRadius || 0}px;`);
             css.push(`
-                ${attr.join('')}
+                ${attr.join("")}
             `);
-            css.push(`background-color:${data.activeStyle.contentColor || 'transparent'};`);
+            css.push(`background-color:${data.activeStyle.contentColor || "transparent"};`);
         }
         // 当前活动的样式?
         if (data.style) {
@@ -677,14 +686,14 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
                 z-index:${data.float ? FloatZindex + (data.z || 0) : ActiveZindex};
                 width:${data.style.width}px; 
                 height:${data.style.height}px`);
-            return css.join('');
+            return css.join("");
         }
         // 计算当前item的位置 宽高
         const style = {
             left: data.x * this.griddingWidth,
             top: data.y * this.griddingHeight,
             width: data.w * this.griddingWidth,
-            height: data.h * this.griddingHeight
+            height: data.h * this.griddingHeight,
         };
         // 设置z-index
         let zIndex = data.z || 0;
@@ -698,7 +707,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             z-index:${zIndex};
             width:${style.width}px; 
             height:${style.height}px;`);
-        return css.join('');
+        return css.join("");
     }
     /** 保存Layout */
     saveCurLayout() {
@@ -713,7 +722,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         }
     }
     animateGridItem(item, w = 3, h = 2) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             let minusW = Math.floor((item.w - w) / 5);
             let minusH = Math.floor((item.h - h) / 5);
             if (minusW < 1)
@@ -765,20 +774,20 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         if (!this.curGridItemSubMenuGridData)
             return;
         const item = this.curGridItemSubMenuGridData;
-        const index = this.layoutData.findIndex(a => a.id === item.id);
+        const index = this.layoutData.findIndex((a) => a.id === item.id);
         await this.animateGridItem(item, 3, 3);
         const junkGridItem = this.layoutData.splice(index, 1)[0];
         this.transition = false;
         this.closeGridItemSubMenu();
         this.rearrangement();
         this.reRender();
-        const emit = new Event('removeGridItem');
+        const emit = new Event("removeGridItem");
         emit.detail = junkGridItem;
         this.dispatchEvent(emit);
     }
     getGridItemIndex(target) {
-        const grid = (target === null || target === void 0 ? void 0 : target.closest('.grid-item')) || null;
-        return Number((grid === null || grid === void 0 ? void 0 : grid.dataset.index) || '0');
+        const grid = (target === null || target === void 0 ? void 0 : target.closest(".grid-item")) || null;
+        return Number((grid === null || grid === void 0 ? void 0 : grid.dataset.index) || "0");
     }
     getGridItem(target) {
         const index = this.getGridItemIndex(target);
@@ -797,7 +806,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         const target1 = event === null || event === void 0 ? void 0 : event.target;
         const target = target1.parentElement;
         // 更多按钮
-        if (!(target === null || target === void 0 ? void 0 : target.closest('.btn-more'))) {
+        if (!(target === null || target === void 0 ? void 0 : target.closest(".btn-more"))) {
             this.closeGridItemSubMenu();
         }
         // 否则 关闭菜单
@@ -816,7 +825,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // 当前移动item的位置信息 转换成像素
         this.movePosition = {
             left: this.curMovingGridItemData.x * this.griddingWidth,
-            top: this.curMovingGridItemData.y * this.griddingHeight
+            top: this.curMovingGridItemData.y * this.griddingHeight,
         };
         // 记住鼠标按下的位置
         const fixPosition = { left: 0, top: 0 };
@@ -827,7 +836,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         oldPosition.left = this.movePosition.left;
         oldPosition.top = this.movePosition.top;
         // 如果不是当前选中项 那么 移除选中效果
-        this.layoutData.forEach(item => {
+        this.layoutData.forEach((item) => {
             if (item.id !== this.curMovingGridItemData.id)
                 delete item.selected;
         });
@@ -851,8 +860,10 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             // 选中当前移动的item
             this.curMovingGridItemData.selected = true;
             // 移动中的位置 = 旧位置 + 鼠标移动的距离(px)
-            this.movePosition.left = oldPosition.left + (event.clientX - fixPosition.left);
-            this.movePosition.top = oldPosition.top + (event.clientY - fixPosition.top);
+            this.movePosition.left =
+                oldPosition.left + (event.clientX - fixPosition.left);
+            this.movePosition.top =
+                oldPosition.top + (event.clientY - fixPosition.top);
             // 拖拽中的阴影
             this.draggIng = true;
             // 当前移动中的item
@@ -868,7 +879,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
                 width,
                 height,
                 left: this.movePosition.left,
-                top: this.movePosition.top
+                top: this.movePosition.top,
             };
             // 将px像素值转成 网格数
             const { x, y } = this.calcNearPosition(this.movePosition.left, this.movePosition.top);
@@ -884,8 +895,8 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
                     y,
                     w,
                     h,
-                    id: '9999',
-                    z: 0
+                    id: "9999",
+                    z: 0,
                 });
                 if (newPos) {
                     this.dragData.x = newPos.x;
@@ -914,17 +925,17 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             // 保存layout 数据
             this.saveCurLayout();
             // 移除禁止选中文字
-            document.body.removeAttribute('onselectstart');
+            document.body.removeAttribute("onselectstart");
             // 移除监听事件
-            window.removeEventListener('mousemove', onDragging);
-            window.removeEventListener('mouseup', onDragEnd);
+            window.removeEventListener("mousemove", onDragging);
+            window.removeEventListener("mouseup", onDragEnd);
         };
         // 将dome 禁止选中文字
-        document.body.setAttribute('onselectstart', 'return false');
+        document.body.setAttribute("onselectstart", "return false");
         // 监听鼠标移动事件
-        window.addEventListener('mousemove', onDragging);
+        window.addEventListener("mousemove", onDragging);
         // 监听鼠标松开事件
-        window.addEventListener('mouseup', onDragEnd);
+        window.addEventListener("mouseup", onDragEnd);
     }
     /**
      * 获取最近的空间
@@ -949,9 +960,9 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // 获取当前与当前 item 重叠交叉的 gridItem list
         const overList = this.findOverlapItem(this.layoutData, x, y, w, h, [
             this.dragData.id,
-            this.curActiveGridItem.id
+            this.curActiveGridItem.id,
         ]);
-        overList.forEach(overItem => {
+        overList.forEach((overItem) => {
             // 交叉部分的宽度
             const overW = w +
                 overItem.w -
@@ -994,18 +1005,18 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      */
     onGridLayoutClick(event) {
         var _a, _b, _c, _d, _e;
-        if ((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest('.toolbar'))
+        if ((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest(".toolbar"))
             return;
-        if ((_b = event === null || event === void 0 ? void 0 : event.target) === null || _b === void 0 ? void 0 : _b.closest('.grid-item'))
+        if ((_b = event === null || event === void 0 ? void 0 : event.target) === null || _b === void 0 ? void 0 : _b.closest(".grid-item"))
             return;
-        if ((_c = event === null || event === void 0 ? void 0 : event.target) === null || _c === void 0 ? void 0 : _c.closest('[slot]'))
+        if ((_c = event === null || event === void 0 ? void 0 : event.target) === null || _c === void 0 ? void 0 : _c.closest("[slot]"))
             return;
-        if ((_d = event === null || event === void 0 ? void 0 : event.target) === null || _d === void 0 ? void 0 : _d.closest('.btn-more'))
+        if ((_d = event === null || event === void 0 ? void 0 : event.target) === null || _d === void 0 ? void 0 : _d.closest(".btn-more"))
             return;
-        if ((_e = event === null || event === void 0 ? void 0 : event.target) === null || _e === void 0 ? void 0 : _e.closest('.box-menu'))
+        if ((_e = event === null || event === void 0 ? void 0 : event.target) === null || _e === void 0 ? void 0 : _e.closest(".box-menu"))
             return;
         // 删除所有选中
-        this.layoutData.forEach(item => {
+        this.layoutData.forEach((item) => {
             delete item.selected;
         });
         // this.styleMapEditing = false
@@ -1083,7 +1094,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // }
         var _a;
         // 将当前拖动的item和 浮动的item 排除
-        let dataList = list.filter(item => { var _a; return item.id !== ((_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id) && !item.float; });
+        let dataList = list.filter((item) => { var _a; return item.id !== ((_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id) && !item.float; });
         dataList = dataList.sort((a, b) => {
             if (a.y < b.y) {
                 return -1;
@@ -1105,7 +1116,10 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         for (let i = 0; i < dataList.length; i++) {
             const item = dataList[i];
             // 拿到上方空白处的y网格数
-            const { y } = this.getGridItemTopY(list, item, [(_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id, item.id]);
+            const { y } = this.getGridItemTopY(list, item, [
+                (_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id,
+                item.id,
+            ]);
             // 如果y比当前item的y小 name 就将 y 赋值给 item.y 将 当前item上移
             if (y < item.y) {
                 item.y = y;
@@ -1121,7 +1135,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      */
     sortBottomOver(list) {
         var _a;
-        let dataList = list.filter(item => { var _a; return item.id !== ((_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id); });
+        let dataList = list.filter((item) => { var _a; return item.id !== ((_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id); });
         dataList = dataList.sort((a, b) => {
             if (a.y < b.y) {
                 return -1;
@@ -1166,7 +1180,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         const newList = this.findOverlapItem(list, x, y, w, h, [
             id,
             // this.dragData?.id,
-            (_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id
+            (_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id,
         ]);
         // 如果有重叠
         if (newList.length) {
@@ -1189,14 +1203,14 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.sortBottomOver(list);
         this.sortTopSpace(list);
         this.layoutData = list
-            .filter(item => {
+            .filter((item) => {
             if (item.id === DRAG_ID) {
                 this.dragData = item;
                 return false;
             }
             return true;
         })
-            .map(item => {
+            .map((item) => {
             var _a;
             if (item.id === ((_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.id)) {
                 return this.curActiveGridItem;
@@ -1219,7 +1233,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             return;
         }
         // 找出浮动的item 列表
-        let floatGridItems = this.layoutData.filter(item => item.float);
+        let floatGridItems = this.layoutData.filter((item) => item.float);
         // 将浮动的item 列表排序
         floatGridItems = floatGridItems.sort((a, b) => a.z - b.z);
         // 将排序后的浮动的item 的 zIndex 重新赋值
@@ -1227,7 +1241,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             item.z = i;
         });
         //找到当前选中的那个item 的 index
-        const index = floatGridItems.findIndex(item => { var _a; return item.id === ((_a = this.curSelectGridItem) === null || _a === void 0 ? void 0 : _a.id); });
+        const index = floatGridItems.findIndex((item) => { var _a; return item.id === ((_a = this.curSelectGridItem) === null || _a === void 0 ? void 0 : _a.id); });
         // 如果他是最后一个 即 浮动层级最高的那个 那么不用处理直接渲染
         if (index >= floatGridItems.length - 1) {
             this.reRender();
@@ -1257,7 +1271,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             this.reRender();
             return;
         }
-        let floatGridItems = this.layoutData.filter(item => item.float);
+        let floatGridItems = this.layoutData.filter((item) => item.float);
         // 浮动排序
         floatGridItems = floatGridItems.sort((a, b) => a.z - b.z);
         // 重新赋值
@@ -1265,7 +1279,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             item.z = i;
         });
         // 查找当前选中的item 的 index
-        const index = floatGridItems.findIndex(item => { var _a; return item.id === ((_a = this.curSelectGridItem) === null || _a === void 0 ? void 0 : _a.id); });
+        const index = floatGridItems.findIndex((item) => { var _a; return item.id === ((_a = this.curSelectGridItem) === null || _a === void 0 ? void 0 : _a.id); });
         // 如果是第一个的话 不做处理 已经是最底层了
         if (index === 0) {
             this.reRender();
@@ -1288,21 +1302,21 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
      * @returns
      */
     getLayoutDefaultGridItemStyle() {
-        const style = ['.grid-layout > .grid-item {'];
+        const style = [".grid-layout > .grid-item {"];
         if (this.layoutDefaultGridStyle.borderRadius) {
             style.push(` border-radius: ${this.layoutDefaultGridStyle.borderRadius}px;`);
         }
         if (this.layoutDefaultGridStyle.borderStyle) {
             style.push(`border-style: ${this.layoutDefaultGridStyle.borderStyle};`);
-            style.push(`border-color: ${this.layoutDefaultGridStyle.borderColor || 'transparent'};`);
+            style.push(`border-color: ${this.layoutDefaultGridStyle.borderColor || "transparent"};`);
             style.push(`border-width: ${this.layoutDefaultGridStyle.borderWidth}px;`);
         }
         if (this.layoutDefaultGridStyle.contentColor)
             style.push(`background-color: ${this.layoutDefaultGridStyle.contentColor};`);
-        style.push('}');
+        style.push("}");
         return html `<style>
-            ${style.join('')}
-        </style>`;
+      ${style.join("")}
+    </style>`;
     }
     /**
      * 打开样式配置
@@ -1311,7 +1325,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
     openSetStyleBySubMenu() {
         if (!this.curGridItemSubMenuGridData)
             return;
-        const emit = new Event('openSetActiveStyle');
+        const emit = new Event("openSetActiveStyle");
         emit.detail = this.curGridItemSubMenuGridData;
         this.closeGridItemSubMenu();
         this.reRender();
@@ -1324,7 +1338,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
     openConfigSetBySubMenu() {
         if (!this.curGridItemSubMenuGridData)
             return;
-        const emit = new Event('openConfigSet');
+        const emit = new Event("openConfigSet");
         emit.detail = this.curGridItemSubMenuGridData;
         this.closeGridItemSubMenu();
         this.reRender();
@@ -1345,7 +1359,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         return (_a = this.curActiveGridItem) === null || _a === void 0 ? void 0 : _a.style;
     }
     get curSelectGridItem() {
-        return this.layoutData.find(item => item.selected);
+        return this.layoutData.find((item) => item.selected);
     }
     /**
      * 选中的UserStyle;
@@ -1356,14 +1370,14 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         if (!this.curGridItemSubMenuGridData.activeStyle) {
             const astye = {
                 titleStyleVisible: false,
-                borderStyle: '',
+                borderStyle: "",
                 borderWidth: 0,
-                borderColor: '',
+                borderColor: "",
                 borderRadius: 0,
-                titleColor: '',
-                contentColor: '',
+                titleColor: "",
+                contentColor: "",
                 // enbled: true,
-                isFloat: this.curGridItemSubMenuGridData.float || false
+                isFloat: this.curGridItemSubMenuGridData.float || false,
             };
             this.curGridItemSubMenuGridData.activeStyle = astye;
         }
@@ -1378,7 +1392,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             list = [this.dragData, ...list];
         }
         let h = 0;
-        list.forEach(item => {
+        list.forEach((item) => {
             h = h < item.y + item.h ? item.y + item.h : h;
         });
         h = h + this.gridMargin;
@@ -1403,7 +1417,8 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         if (this.boxResizeTime)
             clearTimeout(this.boxResizeTime);
         this.boxResizeTime = setTimeout(() => {
-            this.stageWidth = this.getBoundingClientRect().width - this.defaultRightMargin;
+            this.stageWidth =
+                this.getBoundingClientRect().width - this.defaultRightMargin;
             this.reRender();
             this.dispatchGridItemResizeEvent(null);
         }, 300);
@@ -1441,7 +1456,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.layoutDefaultGridStyle.borderColor =
             this.layoutDefaultGridStyle.borderColor !== undefined
                 ? this.layoutDefaultGridStyle.borderColor
-                : '#c3c3c3';
+                : "#c3c3c3";
         this.layoutDefaultGridStyle.borderWidth =
             this.layoutDefaultGridStyle.borderWidth !== undefined
                 ? this.layoutDefaultGridStyle.borderWidth
@@ -1449,15 +1464,15 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.layoutDefaultGridStyle.borderStyle =
             this.layoutDefaultGridStyle.borderStyle !== undefined
                 ? this.layoutDefaultGridStyle.borderStyle
-                : 'solid';
+                : "solid";
         this.layoutDefaultGridStyle.titleColor =
             this.layoutDefaultGridStyle.titleColor !== undefined
                 ? this.layoutDefaultGridStyle.titleColor
-                : '#fff';
+                : "#fff";
         this.layoutDefaultGridStyle.contentColor =
             this.layoutDefaultGridStyle.contentColor !== undefined
                 ? this.layoutDefaultGridStyle.contentColor
-                : '#fff';
+                : "#fff";
         // getBoundingClientRect 原生方法 获取目标dom 的 宽高位置信息
         const curRect = this.getBoundingClientRect();
         // 设置宽高
@@ -1468,23 +1483,25 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         // 所以此处((this.maxGridItemWidthCount - this.gridMargin) / 4 就是每一个网格加上间隙的网格树
         // 减去间隙 就是每个 拖拽项目 所占的网格数
         this.defaultGridItemWidth =
-            Math.floor((this.maxGridItemWidthCount - this.gridMargin) / 4) - this.gridMargin;
+            Math.floor((this.maxGridItemWidthCount - this.gridMargin) / 4) -
+                this.gridMargin;
         // dom总高度/每个网格所占的像素值 获取整屏网格数
         this.maxGridItemHeightCount = Math.floor(layoutHeight / this.griddingHeight);
         // 用整屏网格数减去间隙 获取每个网格所占的像素值 (通上 宽度计算)
         // 得到每个默认拖拽项目的高度 所占的网格数
         this.defaultGridItemHeight =
-            Math.floor((this.maxGridItemHeightCount - this.gridMargin) / 4) - this.gridMargin;
+            Math.floor((this.maxGridItemHeightCount - this.gridMargin) / 4) -
+                this.gridMargin;
         // 看是否禁止滚动条
-        this.style.overflowY = this.isDisableScrollBars ? 'hidden' : 'auto';
+        this.style.overflowY = this.isDisableScrollBars ? "hidden" : "auto";
         // 监听窗口大小变化
-        window.addEventListener('resize', this.bind(this, 'boxResize'));
+        window.addEventListener("resize", this.bind(this, "boxResize"));
     }
     /**
      * 生命周期--销毁
      */
     disconnectedCallback() {
-        window.removeEventListener('resize', this.bindHnd['boxResize']);
+        window.removeEventListener("resize", this.bindHnd["boxResize"]);
     }
     /**
      *  工具栏
@@ -1498,7 +1515,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
             left: 0,
             top: 0,
             width: this.stageWidth,
-            height: this.calcStageActualHeight
+            height: this.calcStageActualHeight,
         };
         // 设置弹出菜单的位置
         this.curGridItemSubMenuPos.x = rect.left - parentRect.left + rect.width + 3;
@@ -1507,7 +1524,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.curGridItemSubMenuShow = true;
         this.curGridItemSubMenuGridData = this.getGridItem(event.currentTarget);
         // 移除其它的选中效果
-        this.layoutData.forEach(item => {
+        this.layoutData.forEach((item) => {
             delete item.selected;
         });
         // 当前弹出菜单 的item 选中的效果
@@ -1520,7 +1537,7 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
     getItemTitle(itemId) {
         const item = this.headerConfigList.find((itemConfig) => itemConfig.id === itemId);
         const panelOptions = item === null || item === void 0 ? void 0 : item.PanelOptions;
-        return (panelOptions === null || panelOptions === void 0 ? void 0 : panelOptions.title) || '';
+        return (panelOptions === null || panelOptions === void 0 ? void 0 : panelOptions.title) || "";
     }
     /**
      * 渲染方法
@@ -1533,521 +1550,531 @@ let GridLayoutLit = class GridLayoutLit extends LitElement {
         this.stageHeight = curRect.height;
         // 展示页面
         return html `<div class="grid-layout" @click="${this.onGridLayoutClick}">
-                <!-- 如果有滚动条,那么需要加上虚拟高度把页面撑开 -->
-                <div class="grid-sitting" style="height:${this.calcStageActualHeight}px;"></div>
-                ${this.edit
+        <!-- 如果有滚动条,那么需要加上虚拟高度把页面撑开 -->
+        <div
+          class="grid-sitting"
+          style="height:${this.calcStageActualHeight}px;"
+        ></div>
+        ${this.edit
             ? html `
-                          <!-- 测试 开发 的工具栏 -->
-                          <div class="toolbar" hide="${this.hideToolbar}">
-                              <i class="el-icon add" @click="${this.addGridItem}">
-                                  <!--[-->
-                                  ${ADD_SVG}
-                                  <!--]-->
-                              </i>
-                              <i class="el-icon back" @click="${this.backLayout}">
-                                  <!--[-->
-                                  ${BACK_LAYOUT}
-                                  <!--]-->
-                              </i>
-                              <i class="el-icon forward" @click="${this.forwardLayout}">
-                                  <!--[-->
-                                    ${FORWARD_LAYOUT}
-                                  <!--]-->
-                              </i>
-                              <i class="el-icon save" @click="${this.save}">
-                                  <!--[-->
-                                 ${SAVE_LAYOUT}
-                                  <!--]-->
-                              </i>
-                              <i class="el-icon close" @click="${this.close}">
-                                  <!--[-->
-                                  ${CLOSE_LAYOUT}
-                                  <!--]-->
-                              </i>
-                          </div>
-                          ${this.showGridItemMenu()}
-                      `
-            : ''}
-                <!-- 拖拽项目渲染 -->
-                ${this.layoutData.map((item, i) => {
+              <!-- 测试 开发 的工具栏 -->
+              <div class="toolbar" hide="${this.hideToolbar}">
+                <i class="el-icon add" @click="${this.addGridItem}">
+                  <!--[-->
+                  ${ADD_SVG}
+                  <!--]-->
+                </i>
+                <i class="el-icon back" @click="${this.backLayout}">
+                  <!--[-->
+                  ${BACK_LAYOUT}
+                  <!--]-->
+                </i>
+                <i class="el-icon forward" @click="${this.forwardLayout}">
+                  <!--[-->
+                  ${FORWARD_LAYOUT}
+                  <!--]-->
+                </i>
+                <i class="el-icon save" @click="${this.save}">
+                  <!--[-->
+                  ${SAVE_LAYOUT}
+                  <!--]-->
+                </i>
+                <i class="el-icon close" @click="${this.close}">
+                  <!--[-->
+                  ${CLOSE_LAYOUT}
+                  <!--]-->
+                </i>
+              </div>
+              ${this.showGridItemMenu()}
+            `
+            : ""}
+        <!-- 拖拽项目渲染 -->
+        ${this.layoutData.map((item, i) => {
             var _a;
             return html `
-                        <div
-                            class="grid-item"
-                            data-index="${i}"
-                            selected="${item.selected || false}"
-                            float="${item.float || false}"
-                            edit="${this.edit}"
-                            style="${this.getGridItemStyle(item)}"
-                            transition="${this.transition}"
-                            lightning-style="${this.lightningId === String(item.id)}"
-                        >
-                            <div class="head-tool" @mousedown="${this.gridItemDragstart}">
-                                <div>
-                                    <div class="title_cls">
-                                        ${TITLE_SVG}
-                                        <div style="margin-left: 5px;">
-                                            ${((_a = item.activeStyle) === null || _a === void 0 ? void 0 : _a.titleStyleVisible)
+            <div
+              class="grid-item"
+              data-index="${i}"
+              selected="${item.selected || false}"
+              float="${item.float || false}"
+              edit="${this.edit}"
+              style="${this.getGridItemStyle(item)}"
+              transition="${this.transition}"
+              lightning-style="${this.lightningId === String(item.id)}"
+            >
+              <div class="head-tool" @mousedown="${this.gridItemDragstart}">
+                <div>
+                  <div class="title_cls">
+                    ${TITLE_SVG}
+                    <div style="margin-left: 5px;">
+                      ${((_a = item.activeStyle) === null || _a === void 0 ? void 0 : _a.titleStyleVisible)
                 ? this.getItemTitle(item.id)
-                : ''}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tool-btn" @click="${this.onCLickTool}">
-                                    <i class="el-icon btn-more" style="font-size: 20px;">
-                                        ${MORE_SVG}
-                                    </i>
-                                </div>
-                            </div>
-                            <div style="height: calc(100% - 36px);">
-                                <slot name="${item.slot || ''}"></slot>
-                            </div>
-                            <!-- 编辑状态不让点击里面的元素 -->
-                            <!-- ${this.edit ? html `<div class="move-bg"></div>` : ''} -->
-                            <!-- 渲染右上角工具菜单 -->
-                            ${this.renderToobar()}
-                        </div>
-                    `;
-        })}
-                <!-- 拖拽中 -->
-                ${this.draggIng ? this.drawDragDataHtml() : ''}
+                : ""}
+                    </div>
+                  </div>
+                </div>
+                <div class="tool-btn" @click="${this.onCLickTool}">
+                  <i class="el-icon btn-more" style="font-size: 20px;">
+                    ${MORE_SVG}
+                  </i>
+                </div>
+              </div>
+              <div style="height: calc(100% - 36px);">
+                <slot name="${item.slot || ""}"></slot>
+              </div>
+              <!-- 编辑状态不让点击里面的元素 -->
+              <!-- ${this.edit ? html `<div class="move-bg"></div>` : ""} -->
+              <!-- 渲染右上角工具菜单 -->
+              ${this.renderToobar()}
             </div>
-            <!-- 无用代码,暂时保留 -->
-            ${this.showDialog()} ${this.getLayoutDefaultGridItemStyle()} `;
+          `;
+        })}
+        <!-- 拖拽中 -->
+        ${this.draggIng ? this.drawDragDataHtml() : ""}
+      </div>
+      <!-- 无用代码,暂时保留 -->
+      ${this.showDialog()} ${this.getLayoutDefaultGridItemStyle()} `;
     }
     // 工具栏 (三个点 和 右下角的 resize图标)
     renderToobar() {
         if (!this.edit)
-            return '';
+            return "";
         return html `<div
-            class="resize bottom-right"
-            @mousedown="${this.gridItemResizeStart}"
-        ></div>`;
+      class="resize bottom-right"
+      @mousedown="${this.gridItemResizeStart}"
+    ></div>`;
     }
     // 编辑菜单漂浮窗
     showGridItemMenu() {
         var _a, _b;
         return html `
-            <div
-                class="box-menu ${this.curGridItemSubMenuShow ? 'show' : ''}"
-                style="left:${this.curGridItemSubMenuPos.x}px;top:${this.curGridItemSubMenuPos.y}px"
-            >
-                <div class="menu-item" @click="${this.openConfigSetBySubMenu}">
-                    <i class="el-icon">
-                        <!--[-->
-                        ${EDIT_SVG}
-                        <!--]-->
-                    </i>
-                    <span class="el-label">${this.i18n.t('edit', true)}</span>
-                </div>
-                <div class="menu-item" @click="${this.openSetStyleBySubMenu}">
-                    <i class="el-icon">
-                        <!--[-->
-                        ${STYLE_SVG}
-                        <!--]-->
-                    </i>
-                    <span class="el-label">${this.i18n.t('style', true)}</span>
-                </div>
-                <div class="menu-item" @click="${this.gridItemCloseBySubMenu}">
-                    <i class="el-icon close grid-item-close" style="font-size:20px;">
-                        <!--[-->
-                        ${DELETE_SVG}
-                        <!--]-->
-                    </i>
-                    <span class="el-label">${this.i18n.t('delete', true)}</span>
-                </div>
-                <div
-                    class="menu-item"
-                    @click="${this.setZindexUp}"
-                    style="display:${((_a = this.curSelectGridItem) === null || _a === void 0 ? void 0 : _a.float) ? 'flex' : 'none'}"
-                >
-                    <i class="el-icon">
-                        <!--[-->
-                        ${ZINDEX_UP_SVG}
-                        <!--]-->
-                    </i>
-                    <span class="el-label">${this.i18n.t('upperFloor', true)}</span>
-                </div>
-                <div
-                    class="menu-item"
-                    @click="${this.setZindexDown}"
-                    style="display:${((_b = this.curSelectGridItem) === null || _b === void 0 ? void 0 : _b.float) ? 'flex' : 'none'}"
-                >
-                    <i class="el-icon">
-                        <!--[-->
-                        ${ZINDEX_DOWN_SVG}
-                        <!--]-->
-                    </i>
-                    <span class="el-label">${this.i18n.t('nextFloor', true)}</span>
-                </div>
-                <div class="menu-item" @click="${this.gridItemCopyBySubMenu}">
-                    <i class="el-icon">
-                        <!--[-->
-                        ${DELETE_LAYOUT_SVG}
-                        <!--]-->
-                    </i>
-                    <span class="el-label">${this.i18n.t('copy', true)}</span>
-                </div>
-            </div>
-        `;
+      <div
+        class="box-menu ${this.curGridItemSubMenuShow ? "show" : ""}"
+        style="left:${this.curGridItemSubMenuPos.x}px;top:${this
+            .curGridItemSubMenuPos.y}px"
+      >
+        <div class="menu-item" @click="${this.openConfigSetBySubMenu}">
+          <i class="el-icon">
+            <!--[-->
+            ${EDIT_SVG}
+            <!--]-->
+          </i>
+          <span class="el-label">${this.i18n.t("edit", true)}</span>
+        </div>
+        <div class="menu-item" @click="${this.openSetStyleBySubMenu}">
+          <i class="el-icon">
+            <!--[-->
+            ${STYLE_SVG}
+            <!--]-->
+          </i>
+          <span class="el-label">${this.i18n.t("style", true)}</span>
+        </div>
+        <div class="menu-item" @click="${this.gridItemCloseBySubMenu}">
+          <i class="el-icon close grid-item-close" style="font-size:20px;">
+            <!--[-->
+            ${DELETE_SVG}
+            <!--]-->
+          </i>
+          <span class="el-label">${this.i18n.t("delete", true)}</span>
+        </div>
+        <div
+          class="menu-item"
+          @click="${this.setZindexUp}"
+          style="display:${((_a = this.curSelectGridItem) === null || _a === void 0 ? void 0 : _a.float) ? "flex" : "none"}"
+        >
+          <i class="el-icon">
+            <!--[-->
+            ${ZINDEX_UP_SVG}
+            <!--]-->
+          </i>
+          <span class="el-label">${this.i18n.t("upperFloor", true)}</span>
+        </div>
+        <div
+          class="menu-item"
+          @click="${this.setZindexDown}"
+          style="display:${((_b = this.curSelectGridItem) === null || _b === void 0 ? void 0 : _b.float) ? "flex" : "none"}"
+        >
+          <i class="el-icon">
+            <!--[-->
+            ${ZINDEX_DOWN_SVG}
+            <!--]-->
+          </i>
+          <span class="el-label">${this.i18n.t("nextFloor", true)}</span>
+        </div>
+        <div class="menu-item" @click="${this.gridItemCopyBySubMenu}">
+          <i class="el-icon">
+            <!--[-->
+            ${DELETE_LAYOUT_SVG}
+            <!--]-->
+          </i>
+          <span class="el-label">${this.i18n.t("copy", true)}</span>
+        </div>
+      </div>
+    `;
     }
     // 无用代码
     showDialog() {
         if (!this.showDialogGridStyle)
-            return '';
+            return "";
         return html `<div class="dialog" open>
-            <div class="style-dialog">
-                <!-- <wc-vue-grid-style
+      <div class="style-dialog">
+        <!-- <wc-vue-grid-style
                     global-config=${JSON.stringify(this.layoutDefaultGridStyle)}
                     config=${JSON.stringify(this.curGridItemSubMenuGridDataActiveStyle)}
                     @change=${this.WcVueGridStyleChange}
                     @close=${this.dialogClose}
                 ></wc-vue-grid-style> -->
-                <div class="head">Style</div>
-                <i class="el-icon close" @click="${this.dialogClose}">
-                    <!--[-->
-                    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            fill="currentColor"
-                            d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"
-                        ></path>
-                    </svg>
-                    <!--]-->
-                </i>
-            </div>
-        </div>`;
+        <div class="head">Style</div>
+        <i class="el-icon close" @click="${this.dialogClose}">
+          <!--[-->
+          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill="currentColor"
+              d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"
+            ></path>
+          </svg>
+          <!--]-->
+        </i>
+      </div>
+    </div>`;
     }
 };
 GridLayoutLit.styles = css `
-        :host {
-            display: block;
-            padding: 0px;
-            height: 100%;
-            overflow-x: hidden;
-        }
-        :host::-webkit-scrollbar {
-            width: 8px;
-            background: #b3b3b3;
-        }
-        :host::-webkit-scrollbar-thumb {
-            width: 8px;
-            background: #767676;
-            border-radius: 5px;
-        }
-        :host::-webkit-scrollbar-track {
-            background: transparent;
-            border-radius: 0px;
-        }
-        .grid-layout {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .toolbar {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            padding: 2px 3px;
-            z-index: 999999;
-            display: flex;
-            background: #000;
-            box-shadow: 2px 2px 5px #000;
-            border-radius: 3px;
-            border: 1px solid rgb(103 103 103);
-        }
-        .toolbar[hide='true'] {
-            display: none;
-        }
-        .toolbar.vertical {
-            top: 20%;
-            right: 5px;
-            flex-flow: column;
-        }
-        .toolbar .el-icon svg {
-            width: 18px;
-            height: 18px;
-        }
-        .toolbar .el-icon {
-            cursor: pointer;
-            margin: 3px 3px;
-            border: 1px solid #dbdbdb;
-            border-radius: 3px;
-            padding: 3px;
-            display: inline-flex;
-            width: 18px;
-            height: 18px;
-            background-color: #fff;
-            color: #333;
-        }
-        .toolbar .el-icon:hover {
-            background-color: #4097e4;
-            color: #fff;
-            opacity: 0.7;
-        }
+    :host {
+      display: block;
+      padding: 0px;
+      height: 100%;
+      overflow-x: hidden;
+    }
+    :host::-webkit-scrollbar {
+      width: 8px;
+      background: #b3b3b3;
+    }
+    :host::-webkit-scrollbar-thumb {
+      width: 8px;
+      background: #767676;
+      border-radius: 5px;
+    }
+    :host::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 0px;
+    }
+    .grid-layout {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .toolbar {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      padding: 2px 3px;
+      z-index: 999999;
+      display: flex;
+      background: #000;
+      box-shadow: 2px 2px 5px #000;
+      border-radius: 3px;
+      border: 1px solid rgb(103 103 103);
+    }
+    .toolbar[hide="true"] {
+      display: none;
+    }
+    .toolbar.vertical {
+      top: 20%;
+      right: 5px;
+      flex-flow: column;
+    }
+    .toolbar .el-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .toolbar .el-icon {
+      cursor: pointer;
+      margin: 3px 3px;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      padding: 3px;
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      background-color: #fff;
+      color: #333;
+    }
+    .toolbar .el-icon:hover {
+      background-color: #4097e4;
+      color: #fff;
+      opacity: 0.7;
+    }
 
-        .toolbar .el-icon[active='true'] {
-            background-color: #4097e4;
-            color: #fff;
-        }
-        .toolbar .el-icon:active {
-            background-color: rgb(131 177 217);
-            color: #fff;
-        }
-        .toolbar .el-icon.forward svg {
-            transform: scaleX(-1);
-        }
-        .old-data {
-            opacity: 0.3;
-        }
-        .grid-sitting {
-            width: 100%;
-            top: 0px;
-            position: absolute;
-            z-index: -1;
-        }
-        .grid-item {
-            display: block;
-            position: absolute;
-            min-width: 20px;
-            min-height: 10px;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-        .grid-item[transition='true'] {
-            transition: all 0.3s;
-        }
-        .grid-item.move {
-            cursor: move;
-        }
-        .grid-item[edit='true'][selected='true'],
-        .grid-item[edit='true']:hover {
-            outline: rgba(124, 165, 208, 0.2) solid 3px;
-        }
-        .grid-item[edit='true'][float='true'] {
-            box-shadow: rgb(0, 0, 0) 5px 5px 30px -25px;
-        }
-        .grid-item[float='true'] .tool-box .set-float {
-            opacity: 1;
-            color: #3250a7;
-        }
-        .grid-item:hover .resize {
-            display: flex;
-        }
-        .grid-item .bottom-right {
-            cursor: se-resize;
-            right: 4px;
-            bottom: 4px;
-            width: 6px;
-            height: 6px;
-            border-right: 2px solid rgb(195, 190, 190);
-            border-bottom: 2px solid rgb(195, 190, 190);
-        }
-        .grid-item .tool-box {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-        }
-        .grid-item .tool-box:hover {
-            opacity: 0.5;
-        }
-        .grid-item .tool-box .el-icon.btn-more {
-            position: relative;
-            display: flex;
-            height: 3px;
-        }
-        .grid-item .tool-box .el-icon.btn-more svg {
-            color: #1b1d1f;
-            width: 16px;
-            height: 16px;
-        }
-        .grid-item .tool-box .el-icon:hover {
-            cursor: pointer;
-            opacity: 0.6;
-        }
-        .grid-item .resize > svg {
-            color: rgb(160 160 160);
-        }
-        .grid-item .resize:hover {
-            opacity: 0.6;
-        }
+    .toolbar .el-icon[active="true"] {
+      background-color: #4097e4;
+      color: #fff;
+    }
+    .toolbar .el-icon:active {
+      background-color: rgb(131 177 217);
+      color: #fff;
+    }
+    .toolbar .el-icon.forward svg {
+      transform: scaleX(-1);
+    }
+    .old-data {
+      opacity: 0.3;
+    }
+    .grid-sitting {
+      width: 100%;
+      top: 0px;
+      position: absolute;
+      z-index: -1;
+    }
+    .grid-item {
+      display: block;
+      position: absolute;
+      min-width: 20px;
+      min-height: 10px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .grid-item[transition="true"] {
+      transition: all 0.3s;
+    }
+    .grid-item.move {
+      cursor: move;
+    }
+    .grid-item[edit="true"][selected="true"],
+    .grid-item[edit="true"]:hover {
+      outline: rgba(124, 165, 208, 0.2) solid 3px;
+    }
+    .grid-item[edit="true"][float="true"] {
+      box-shadow: rgb(0, 0, 0) 5px 5px 30px -25px;
+    }
+    .grid-item[float="true"] .tool-box .set-float {
+      opacity: 1;
+      color: #3250a7;
+    }
+    .grid-item:hover .resize {
+      display: flex;
+    }
+    .grid-item .bottom-right {
+      cursor: se-resize;
+      right: 4px;
+      bottom: 4px;
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid rgb(195, 190, 190);
+      border-bottom: 2px solid rgb(195, 190, 190);
+    }
+    .grid-item .tool-box {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+    }
+    .grid-item .tool-box:hover {
+      opacity: 0.5;
+    }
+    .grid-item .tool-box .el-icon.btn-more {
+      position: relative;
+      display: flex;
+      height: 3px;
+    }
+    .grid-item .tool-box .el-icon.btn-more svg {
+      color: #1b1d1f;
+      width: 16px;
+      height: 16px;
+    }
+    .grid-item .tool-box .el-icon:hover {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .grid-item .resize > svg {
+      color: rgb(160 160 160);
+    }
+    .grid-item .resize:hover {
+      opacity: 0.6;
+    }
 
-        .grid-item[drag='true'] {
-            opacity: 0.5;
-            background-color: rgb(249, 227, 193);
-            box-shadow: none;
-            border: none;
-            transition: none;
-        }
-        .grid-item[drag='true'] .close,
-        .grid-item[drag='true'] .set-float {
-            display: none;
-        }
-        .grid-item[lightning-style='true'] {
-            animation: lightning-style 0.5s;
-        }
-        @keyframes lightning-style {
-            0% {
-                box-shadow: 0px 0px 0px -2px #000;
-            }
-            10% {
-                box-shadow: 0px 0px 2px -2px #000;
-            }
-            20% {
-                box-shadow: 0px 0px 4px -2px #000;
-            }
-            30% {
-                box-shadow: 0px 0px 6px -2px #000;
-            }
-            40% {
-                box-shadow: 0px 0px 8px -2px #000;
-            }
-            50% {
-                box-shadow: 0px 0px 10px -2px #000;
-            }
-            60% {
-                box-shadow: 0px 0px 8px -2px #000;
-            }
-            70% {
-                box-shadow: 0px 0px 6px -2px #000;
-            }
-            80% {
-                box-shadow: 0px 0px 4px -5px #000;
-            }
-            90% {
-                box-shadow: 0px 0px 2px -2px #000;
-            }
-            100% {
-                box-shadow: 0px 0px 0px -2px #000;
-            }
-        }
-        .resize {
-            position: absolute;
-        }
-        .toolbar .el-icon.style-update-btn:hover {
-            background-color: #fff;
-            color: #333;
-        }
-        .toolbar .el-icon.style-update-btn[active='true'] {
-            background-color: #4097e4;
-            color: #fff;
-        }
-        .box-menu {
-            display: none;
-            min-width: 150px;
-            min-height: 32px;
-            position: absolute;
-            z-index: 1900;
-            background-color: #fff;
-            box-shadow: 0px 0px 4px 0px rgba(188, 188, 188, 0.5);
-            border: 0px solid #e0e0e0;
-            border-radius: 6px;
-            font-style: normal;
-            font-size: 12px;
-            color: #1b1d1f;
-            transform: translateX(-100%);
-            box-sizing: border-box;
-            padding: 4px;
-        }
-        .box-menu.show {
-            display: block;
-        }
-        .box-menu .menu-item {
-            display: flex;
-            padding: 8px 15px;
-            align-items: center;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-        .box-menu .menu-item .el-icon {
-            width: 14px;
-            height: 14px;
-            align-items: center;
-            display: flex;
-            color: #585656;
-        }
-        .box-menu .menu-item:hover,
-        .box-menu .menu-item[selected] {
-            background-color: #f6f6f6;
-            color: #1b1d1f;
-        }
-        .box-menu .menu-item:hover .el-icon {
-            color: #1b1d1f;
-        }
-        .box-menu .menu-item span {
-            margin-left: 10px;
-        }
-        .dialog {
-            position: absolute;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
-        }
-        .style-dialog {
-            font-size: 12px;
-            position: absolute;
-            width: 350px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid #e6e6e6;
-            box-shadow: 0px 0px 15px -6px;
-            background: white;
-            padding: 42px 20px 20px;
-            border-radius: 5px;
-            max-height: 100%;
-        }
-        .dialog .close {
-            width: 18px;
-            height: 18px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-        .dialog .close:hover {
-            opacity: 0.7;
-        }
-        .style-dialog .head {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 8px;
-            border-bottom: 1px solid #dddddd;
-        }
-        .move-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0px;
-            background-color: rgba(182, 182, 182, 0);
-            // z-index: -1;
-            cursor: move;
-        }
-        .head-tool {
-            height: 36px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: move;
-            padding: 0 10px;
-        }
-        .head-tool:hover {
-            background-color: #f6f6f6;
-        }
-        .tool-btn {
-            cursor: pointer;
-        }
-        .title_cls {
-            display: flex;
-            align-items: center;
-        }
-    `;
+    .grid-item[drag="true"] {
+      opacity: 0.5;
+      background-color: rgb(249, 227, 193);
+      box-shadow: none;
+      border: none;
+      transition: none;
+    }
+    .grid-item[drag="true"] .close,
+    .grid-item[drag="true"] .set-float {
+      display: none;
+    }
+    .grid-item[lightning-style="true"] {
+      animation: lightning-style 0.5s;
+    }
+    @keyframes lightning-style {
+      0% {
+        box-shadow: 0px 0px 0px -2px #000;
+      }
+      10% {
+        box-shadow: 0px 0px 2px -2px #000;
+      }
+      20% {
+        box-shadow: 0px 0px 4px -2px #000;
+      }
+      30% {
+        box-shadow: 0px 0px 6px -2px #000;
+      }
+      40% {
+        box-shadow: 0px 0px 8px -2px #000;
+      }
+      50% {
+        box-shadow: 0px 0px 10px -2px #000;
+      }
+      60% {
+        box-shadow: 0px 0px 8px -2px #000;
+      }
+      70% {
+        box-shadow: 0px 0px 6px -2px #000;
+      }
+      80% {
+        box-shadow: 0px 0px 4px -5px #000;
+      }
+      90% {
+        box-shadow: 0px 0px 2px -2px #000;
+      }
+      100% {
+        box-shadow: 0px 0px 0px -2px #000;
+      }
+    }
+    .resize {
+      position: absolute;
+    }
+    .toolbar .el-icon.style-update-btn:hover {
+      background-color: #fff;
+      color: #333;
+    }
+    .toolbar .el-icon.style-update-btn[active="true"] {
+      background-color: #4097e4;
+      color: #fff;
+    }
+    .box-menu {
+      display: none;
+      min-width: 150px;
+      min-height: 32px;
+      position: absolute;
+      z-index: 1900;
+      background-color: #fff;
+      box-shadow: 0px 0px 4px 0px rgba(188, 188, 188, 0.5);
+      border: 0px solid #e0e0e0;
+      border-radius: 6px;
+      font-style: normal;
+      font-size: 12px;
+      color: #1b1d1f;
+      transform: translateX(-100%);
+      box-sizing: border-box;
+      padding: 4px;
+    }
+    .box-menu.show {
+      display: block;
+    }
+    .box-menu .menu-item {
+      display: flex;
+      padding: 8px 15px;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .box-menu .menu-item .el-icon {
+      width: 14px;
+      height: 14px;
+      align-items: center;
+      display: flex;
+      color: #585656;
+    }
+    .box-menu .menu-item:hover,
+    .box-menu .menu-item[selected] {
+      background-color: #f6f6f6;
+      color: #1b1d1f;
+    }
+    .box-menu .menu-item:hover .el-icon {
+      color: #1b1d1f;
+    }
+    .box-menu .menu-item span {
+      margin-left: 10px;
+    }
+    .dialog {
+      position: absolute;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .style-dialog {
+      font-size: 12px;
+      position: absolute;
+      width: 350px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid #e6e6e6;
+      box-shadow: 0px 0px 15px -6px;
+      background: white;
+      padding: 42px 20px 20px;
+      border-radius: 5px;
+      max-height: 100%;
+    }
+    .dialog .close {
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+    .dialog .close:hover {
+      opacity: 0.7;
+    }
+    .style-dialog .head {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      border-bottom: 1px solid #dddddd;
+    }
+    .move-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0px;
+      background-color: rgba(182, 182, 182, 0);
+      // z-index: -1;
+      cursor: move;
+    }
+    .head-tool {
+      height: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: move;
+      padding: 0 10px;
+    }
+    .head-tool:hover {
+      background-color: #f6f6f6;
+    }
+    .grid-layout > .grid-item[edit="false"] .head-tool {
+      cursor: default;
+    }
+    .grid-layout > .grid-item[edit="false"] .head-too:hover {
+      background-color: #fff;
+    }
+    .tool-btn {
+      cursor: pointer;
+    }
+    .title_cls {
+      display: flex;
+      align-items: center;
+    }
+  `;
 __decorate([
     state()
 ], GridLayoutLit.prototype, "RenderIndex", void 0);
@@ -2079,7 +2106,7 @@ __decorate([
     property({ type: Number })
 ], GridLayoutLit.prototype, "stageHeight", void 0);
 GridLayoutLit = __decorate([
-    customElement('grid-layout-lit')
+    customElement("grid-layout-lit")
 ], GridLayoutLit);
 export { GridLayoutLit };
 //# sourceMappingURL=grid-layout-lit.js.map
