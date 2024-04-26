@@ -2070,6 +2070,9 @@ GridLayoutLit.styles = css `
     .tool-btn {
       cursor: pointer;
     }
+    .grid-layout > .grid-item[edit="false"] .tool-btn {
+      display: none;
+    }
     .title_cls {
       display: flex;
       align-items: center;

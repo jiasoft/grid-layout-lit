@@ -2198,6 +2198,9 @@ export class GridLayoutLit extends LitElement {
     .tool-btn {
       cursor: pointer;
     }
+    .grid-layout > .grid-item[edit="false"] .tool-btn {
+      display: none;
+    }
     .title_cls {
       display: flex;
       align-items: center;
