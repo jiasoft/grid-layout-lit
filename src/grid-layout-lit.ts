@@ -1731,8 +1731,9 @@ export class GridLayoutLit extends LitElement {
               style="${this.getGridItemStyle(item)}"
               transition="${this.transition}"
               lightning-style="${this.lightningId === String(item.id)}"
+              @mousedown="${this.gridItemDragstart}"
             >
-              <div class="head-tool" @mousedown="${this.gridItemDragstart}">
+              <div class="head-tool" >
                 <div>
                   <div class="title_cls">
                     ${TITLE_SVG}
@@ -1965,6 +1966,7 @@ export class GridLayoutLit extends LitElement {
     .grid-item[transition="true"] {
       transition: all 0.3s;
     }
+    .grid-item[edit="true"],
     .grid-item.move {
       cursor: move;
     }
@@ -2185,9 +2187,6 @@ export class GridLayoutLit extends LitElement {
       align-items: center;
       cursor: move;
       padding: 0 10px;
-    }
-    .head-tool:hover {
-      background-color: #f6f6f6;
     }
     .grid-layout > .grid-item[edit="false"] .head-tool {
       cursor: default;
